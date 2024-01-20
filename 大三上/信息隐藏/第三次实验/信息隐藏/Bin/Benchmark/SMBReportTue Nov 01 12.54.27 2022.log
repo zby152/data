@@ -1,0 +1,46 @@
+MarkBench - Bench Report - Tue Nov 01 12.54.27 2022
+
+MS name            : Blind linear correlation technique - V demo
+MS release date    : June 2000 - Last update: February 2002
+MS contact address : fabienpe@microsoft.com
+MS source location : http://www.cl.cam.ac.uk/~fapp2/watermarking/evaluation/
+MS family type     : 6
+MS max key size    : 32
+MS max msg size    : 0
+
+
+
+
+
+---------------------------------------------------
+Test_JPEG -- Tue Nov 01 12.54.27 2022
+---------------------------------------------------
+Test_JPEG	30	Images/Set1/lenna-waved	Certainty	141.315	34.9075 dB	
+Test_JPEG	40	Images/Set1/lenna-waved	Certainty	141.258	35.7668 dB	
+Test_JPEG	50	Images/Set1/lenna-waved	Certainty	141.216	36.121 dB	
+Test_JPEG	60	Images/Set1/lenna-waved	Certainty	141.222	39.9467 dB	
+Test_JPEG	70	Images/Set1/lenna-waved	Certainty	141.224	45.2974 dB	
+Test_JPEG	80	Images/Set1/lenna-waved	Certainty	141.214	46.0942 dB	
+Test_JPEG	90	Images/Set1/lenna-waved	Certainty	141.214	48.7382 dB	
+Test_JPEG	100	Images/Set1/lenna-waved	Certainty	141.219	53.7495 dB	
+Test_JPEG	30	Images/Set2/skyline_arch	Certainty	92.6625	34.1546 dB	
+Test_JPEG	40	Images/Set2/skyline_arch	Certainty	92.6334	35.0914 dB	
+Test_JPEG	50	Images/Set2/skyline_arch	Certainty	92.5929	35.8155 dB	
+Test_JPEG	60	Images/Set2/skyline_arch	Certainty	92.6297	36.5372 dB	
+Test_JPEG	70	Images/Set2/skyline_arch	Certainty	92.5831	37.5524 dB	
+Test_JPEG	80	Images/Set2/skyline_arch	Certainty	92.5936	38.9465 dB	
+Test_JPEG	90	Images/Set2/skyline_arch	Certainty	92.5914	41.671 dB	
+Test_JPEG	100	Images/Set2/skyline_arch	Certainty	92.6368	48.8787 dB	
+Test_JPEG	30	Images/Set3/Sample	Certainty	67.9843	23.7774 dB	
+Test_JPEG	40	Images/Set3/Sample	Certainty	67.4248	25.2662 dB	
+Test_JPEG	50	Images/Set3/Sample	Certainty	67.5739	25.9773 dB	
+Test_JPEG	60	Images/Set3/Sample	Certainty	67.5043	27.611 dB	
+Test_JPEG	70	Images/Set3/Sample	Certainty	67.1183	30.1946 dB	
+Test_JPEG	80	Images/Set3/Sample	Certainty	67.4481	32.632 dB	
+Test_JPEG	90	Images/Set3/Sample	Certainty	67.7226	36.4305 dB	
+Test_JPEG	100	Images/Set3/Sample	Certainty	67.8635	41.01 dB	
+
+
+
+MarkBench - Bench Results  - Tue Nov 01 12.54.27 2022
+Number of tests which failed:0

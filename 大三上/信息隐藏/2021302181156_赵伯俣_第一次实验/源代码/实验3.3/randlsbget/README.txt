@@ -1,0 +1,1 @@
+randlsbget.m函数将scover.bmp中密文提取出来到secret.txt中，运行时调用函数上方注释中的内容调用。

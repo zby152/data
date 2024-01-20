@@ -1,0 +1,11 @@
+get_keywordsets   读取/home/blockchain/wanghl/train_lm_with_keywords/data_process/test_title_search_in_train_all.csv
+get_keywordsets_bitstream                  读取/data2/yahoo_news_release/test_title_search_in_dev_all.csv
+get_keywordsets_bitstream_jsonl_wo_unk     读取/data2/yahoo_news_release/test_title_search_in_dev_all.csv
+get_keywordsets_bitstream_jsonl_wo_unk_v2  读取/data2/yahoo_news_release/test_title_search_in_dev_all.csv
+get_jsonl_wo_unk_v3                        读取/data2/yahoo_news_release/test_title_search_in_dev_all.jsonl
+										   写/data2/test_title_search_in_train_all_wo_unk.jsonl
+get_keywordsets_bitstream_jsonl			   读/data2/yahoo_news_release/test_title_search_in_dev_all.csv
+converter_table_glove						写glove-wiki-gigaword-300
+converter_table_word2vec					写/data/converter_table_word2vec
+
+

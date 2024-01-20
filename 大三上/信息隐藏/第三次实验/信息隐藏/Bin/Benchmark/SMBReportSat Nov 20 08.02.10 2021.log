@@ -1,0 +1,282 @@
+MarkBench - Bench Report - Sat Nov 20 08.02.10 2021
+
+MS name            : Blind linear correlation technique - V demo
+MS release date    : June 2000 - Last update: February 2002
+MS contact address : fabienpe@microsoft.com
+MS source location : http://www.cl.cam.ac.uk/~fapp2/watermarking/evaluation/
+MS family type     : 6
+MS max key size    : 32
+MS max msg size    : 0
+
+
+
+
+
+---------------------------------------------------
+Test_PSNR -- Sat Nov 20 08.02.10 2021
+---------------------------------------------------
+Test_PSNR	10	Images/Set1/1	Certainty:	108.622	38.617 dB	
+Test_PSNR	20	Images/Set1/1	Certainty:	110.619	34.1722 dB	
+Test_PSNR	30	Images/Set1/1	Certainty:	113.615	30.0799 dB	
+Test_PSNR	40	Images/Set1/1	Certainty:	115.612	28.1375 dB	
+Test_PSNR	50	Images/Set1/1	Certainty:	118.607	25.86 dB	
+Test_PSNR	60	Images/Set1/1	Certainty:	120.604	24.6217 dB	
+Test_PSNR	70	Images/Set1/1	Certainty:	123.6	23.0333 dB	
+Test_PSNR	80	Images/Set1/1	Certainty:	125.597	22.1172 dB	
+Test_PSNR	90	Images/Set1/1	Certainty:	128.592	20.9067 dB	
+Test_PSNR	100	Images/Set1/1	Certainty:	130.587	20.1795 dB	
+Test_PSNR	10	Images/Set1/10	Certainty:	104.614	38.7397 dB	
+Test_PSNR	20	Images/Set1/10	Certainty:	106.57	34.3027 dB	
+Test_PSNR	30	Images/Set1/10	Certainty:	109.499	30.2164 dB	
+Test_PSNR	40	Images/Set1/10	Certainty:	111.448	28.2803 dB	
+Test_PSNR	50	Images/Set1/10	Certainty:	114.365	26.0101 dB	
+Test_PSNR	60	Images/Set1/10	Certainty:	116.305	24.7761 dB	
+Test_PSNR	70	Images/Set1/10	Certainty:	119.208	23.1954 dB	
+Test_PSNR	80	Images/Set1/10	Certainty:	121.143	22.2852 dB	
+Test_PSNR	90	Images/Set1/10	Certainty:	124.032	21.0827 dB	
+Test_PSNR	100	Images/Set1/10	Certainty:	125.953	20.3607 dB	
+Test_PSNR	10	Images/Set1/11	Certainty:	92.5522	38.6165 dB	
+Test_PSNR	20	Images/Set1/11	Certainty:	94.5496	34.1722 dB	
+Test_PSNR	30	Images/Set1/11	Certainty:	97.5452	30.0785 dB	
+Test_PSNR	40	Images/Set1/11	Certainty:	99.542	28.1397 dB	
+Test_PSNR	50	Images/Set1/11	Certainty:	102.535	25.863 dB	
+Test_PSNR	60	Images/Set1/11	Certainty:	104.53	24.6243 dB	
+Test_PSNR	70	Images/Set1/11	Certainty:	107.523	23.0368 dB	
+Test_PSNR	80	Images/Set1/11	Certainty:	109.516	22.1227 dB	
+Test_PSNR	90	Images/Set1/11	Certainty:	112.504	20.9144 dB	
+Test_PSNR	100	Images/Set1/11	Certainty:	114.493	20.1888 dB	
+Test_PSNR	10	Images/Set1/12	Certainty:	109.802	39.1065 dB	
+Test_PSNR	20	Images/Set1/12	Certainty:	111.68	34.6894 dB	
+Test_PSNR	30	Images/Set1/12	Certainty:	114.483	30.6392 dB	
+Test_PSNR	40	Images/Set1/12	Certainty:	116.339	28.7206 dB	
+Test_PSNR	50	Images/Set1/12	Certainty:	119.106	26.4782 dB	
+Test_PSNR	60	Images/Set1/12	Certainty:	120.938	25.2622 dB	
+Test_PSNR	70	Images/Set1/12	Certainty:	123.667	23.7068 dB	
+Test_PSNR	80	Images/Set1/12	Certainty:	125.474	22.8116 dB	
+Test_PSNR	90	Images/Set1/12	Certainty:	128.163	21.6288 dB	
+Test_PSNR	100	Images/Set1/12	Certainty:	129.938	20.922 dB	
+Test_PSNR	10	Images/Set1/13	Certainty:	104.532	38.5865 dB	
+Test_PSNR	20	Images/Set1/13	Certainty:	106.527	34.1464 dB	
+Test_PSNR	30	Images/Set1/13	Certainty:	109.517	30.0895 dB	
+Test_PSNR	40	Images/Set1/13	Certainty:	111.509	28.1525 dB	
+Test_PSNR	50	Images/Set1/13	Certainty:	114.494	25.8776 dB	
+Test_PSNR	60	Images/Set1/13	Certainty:	116.483	24.641 dB	
+Test_PSNR	70	Images/Set1/13	Certainty:	119.463	23.0571 dB	
+Test_PSNR	80	Images/Set1/13	Certainty:	121.449	22.1441 dB	
+Test_PSNR	90	Images/Set1/13	Certainty:	124.423	20.9386 dB	
+Test_PSNR	100	Images/Set1/13	Certainty:	126.403	20.2144 dB	
+Test_PSNR	10	Images/Set1/14	Certainty:	172.43	41.1393 dB	
+Test_PSNR	20	Images/Set1/14	Certainty:	173.706	36.7821 dB	
+Test_PSNR	30	Images/Set1/14	Certainty:	175.583	32.784 dB	
+Test_PSNR	40	Images/Set1/14	Certainty:	176.811	30.8772 dB	--> the expected PSNR of the output is around 27.9588dB
+Test_PSNR	50	Images/Set1/14	Certainty:	178.618	28.6504 dB	--> the expected PSNR of the output is around 26.0206dB
+Test_PSNR	60	Images/Set1/14	Certainty:	179.801	27.4375 dB	--> the expected PSNR of the output is around 24.437dB
+Test_PSNR	70	Images/Set1/14	Certainty:	181.542	25.8958 dB	--> the expected PSNR of the output is around 23.098dB
+Test_PSNR	80	Images/Set1/14	Certainty:	182.683	25.007 dB	--> the expected PSNR of the output is around 21.9382dB
+Test_PSNR	90	Images/Set1/14	Certainty:	184.365	23.8338 dB	--> the expected PSNR of the output is around 20.9151dB
+Test_PSNR	100	Images/Set1/14	Certainty:	185.468	23.1361 dB	--> the expected PSNR of the output is around 20dB
+Test_PSNR	10	Images/Set1/15	Certainty:	117.68	38.6597 dB	
+Test_PSNR	20	Images/Set1/15	Certainty:	119.656	34.2253 dB	
+Test_PSNR	30	Images/Set1/15	Certainty:	122.619	30.1477 dB	
+Test_PSNR	40	Images/Set1/15	Certainty:	124.595	28.2089 dB	
+Test_PSNR	50	Images/Set1/15	Certainty:	127.556	25.9331 dB	
+Test_PSNR	60	Images/Set1/15	Certainty:	129.529	24.6902 dB	
+Test_PSNR	70	Images/Set1/15	Certainty:	132.487	23.1084 dB	
+Test_PSNR	80	Images/Set1/15	Certainty:	134.458	22.1945 dB	
+Test_PSNR	90	Images/Set1/15	Certainty:	137.413	20.9824 dB	
+Test_PSNR	100	Images/Set1/15	Certainty:	139.382	20.2595 dB	
+Test_PSNR	10	Images/Set1/16	Certainty:	110.58	38.6676 dB	
+Test_PSNR	20	Images/Set1/16	Certainty:	112.555	34.2309 dB	
+Test_PSNR	30	Images/Set1/16	Certainty:	115.516	30.1533 dB	
+Test_PSNR	40	Images/Set1/16	Certainty:	117.489	28.2144 dB	
+Test_PSNR	50	Images/Set1/16	Certainty:	120.448	25.9385 dB	
+Test_PSNR	60	Images/Set1/16	Certainty:	122.42	24.6952 dB	
+Test_PSNR	70	Images/Set1/16	Certainty:	125.375	23.1136 dB	
+Test_PSNR	80	Images/Set1/16	Certainty:	127.345	22.2002 dB	
+Test_PSNR	90	Images/Set1/16	Certainty:	130.296	20.9888 dB	
+Test_PSNR	100	Images/Set1/16	Certainty:	132.261	20.2664 dB	
+Test_PSNR	10	Images/Set1/17	Certainty:	105.313	38.6413 dB	
+Test_PSNR	20	Images/Set1/17	Certainty:	107.289	34.2119 dB	
+Test_PSNR	30	Images/Set1/17	Certainty:	110.246	30.1402 dB	
+Test_PSNR	40	Images/Set1/17	Certainty:	112.213	28.2058 dB	
+Test_PSNR	50	Images/Set1/17	Certainty:	115.156	25.937 dB	
+Test_PSNR	60	Images/Set1/17	Certainty:	117.114	24.699 dB	
+Test_PSNR	70	Images/Set1/17	Certainty:	120.041	23.1252 dB	
+Test_PSNR	80	Images/Set1/17	Certainty:	121.988	22.2168 dB	
+Test_PSNR	90	Images/Set1/17	Certainty:	124.897	21.014 dB	
+Test_PSNR	100	Images/Set1/17	Certainty:	126.828	20.2979 dB	
+Test_PSNR	10	Images/Set1/18	Certainty:	108.569	38.8899 dB	
+Test_PSNR	20	Images/Set1/18	Certainty:	110.445	34.4561 dB	
+Test_PSNR	30	Images/Set1/18	Certainty:	113.256	30.3773 dB	
+Test_PSNR	40	Images/Set1/18	Certainty:	115.129	28.4409 dB	
+Test_PSNR	50	Images/Set1/18	Certainty:	117.935	26.1648 dB	
+Test_PSNR	60	Images/Set1/18	Certainty:	119.805	24.924 dB	
+Test_PSNR	70	Images/Set1/18	Certainty:	122.607	23.3433 dB	
+Test_PSNR	80	Images/Set1/18	Certainty:	124.472	22.4299 dB	
+Test_PSNR	90	Images/Set1/18	Certainty:	127.268	21.2191 dB	
+Test_PSNR	100	Images/Set1/18	Certainty:	129.13	20.4969 dB	
+Test_PSNR	10	Images/Set1/19	Certainty:	101.125	38.6169 dB	
+Test_PSNR	20	Images/Set1/19	Certainty:	103.122	34.1738 dB	
+Test_PSNR	30	Images/Set1/19	Certainty:	106.117	30.0813 dB	
+Test_PSNR	40	Images/Set1/19	Certainty:	108.114	28.1411 dB	
+Test_PSNR	50	Images/Set1/19	Certainty:	111.108	25.8649 dB	
+Test_PSNR	60	Images/Set1/19	Certainty:	113.103	24.6256 dB	
+Test_PSNR	70	Images/Set1/19	Certainty:	116.096	23.0386 dB	
+Test_PSNR	80	Images/Set1/19	Certainty:	118.09	22.1237 dB	
+Test_PSNR	90	Images/Set1/19	Certainty:	121.08	20.9139 dB	
+Test_PSNR	100	Images/Set1/19	Certainty:	123.073	20.1875 dB	
+Test_PSNR	10	Images/Set1/2	Certainty:	79.8046	38.6088 dB	
+Test_PSNR	20	Images/Set1/2	Certainty:	81.8035	34.1663 dB	
+Test_PSNR	30	Images/Set1/2	Certainty:	84.8014	30.0769 dB	
+Test_PSNR	40	Images/Set1/2	Certainty:	86.7995	28.1357 dB	
+Test_PSNR	50	Images/Set1/2	Certainty:	89.7961	25.8592 dB	
+Test_PSNR	60	Images/Set1/2	Certainty:	91.7935	24.6207 dB	
+Test_PSNR	70	Images/Set1/2	Certainty:	94.789	23.0336 dB	
+Test_PSNR	80	Images/Set1/2	Certainty:	96.7857	22.1181 dB	
+Test_PSNR	90	Images/Set1/2	Certainty:	99.7796	20.9078 dB	
+Test_PSNR	100	Images/Set1/2	Certainty:	101.776	20.1814 dB	
+Test_PSNR	10	Images/Set1/20	Certainty:	132.852	38.612 dB	
+Test_PSNR	20	Images/Set1/20	Certainty:	134.851	34.171 dB	
+Test_PSNR	30	Images/Set1/20	Certainty:	137.848	30.0754 dB	
+Test_PSNR	40	Images/Set1/20	Certainty:	139.846	28.1351 dB	
+Test_PSNR	50	Images/Set1/20	Certainty:	142.841	25.8596 dB	
+Test_PSNR	60	Images/Set1/20	Certainty:	144.838	24.6207 dB	
+Test_PSNR	70	Images/Set1/20	Certainty:	147.833	23.0333 dB	
+Test_PSNR	80	Images/Set1/20	Certainty:	149.829	22.1188 dB	
+Test_PSNR	90	Images/Set1/20	Certainty:	152.823	20.9097 dB	
+Test_PSNR	100	Images/Set1/20	Certainty:	154.817	20.1826 dB	
+Test_PSNR	10	Images/Set1/21	Certainty:	122.531	38.6503 dB	
+Test_PSNR	20	Images/Set1/21	Certainty:	124.516	34.2086 dB	
+Test_PSNR	30	Images/Set1/21	Certainty:	127.493	30.115 dB	
+Test_PSNR	40	Images/Set1/21	Certainty:	129.476	28.1754 dB	
+Test_PSNR	50	Images/Set1/21	Certainty:	132.45	25.8999 dB	
+Test_PSNR	60	Images/Set1/21	Certainty:	134.432	24.6618 dB	
+Test_PSNR	70	Images/Set1/21	Certainty:	137.402	23.0753 dB	
+Test_PSNR	80	Images/Set1/21	Certainty:	139.382	22.1609 dB	
+Test_PSNR	90	Images/Set1/21	Certainty:	142.349	20.9523 dB	
+Test_PSNR	100	Images/Set1/21	Certainty:	144.326	20.2262 dB	
+Test_PSNR	10	Images/Set1/22	Certainty:	79.245	38.6195 dB	
+Test_PSNR	20	Images/Set1/22	Certainty:	81.2426	34.1734 dB	
+Test_PSNR	30	Images/Set1/22	Certainty:	84.2389	30.076 dB	
+Test_PSNR	40	Images/Set1/22	Certainty:	86.2364	28.1383 dB	
+Test_PSNR	50	Images/Set1/22	Certainty:	89.2324	25.86 dB	
+Test_PSNR	60	Images/Set1/22	Certainty:	91.2296	24.6229 dB	
+Test_PSNR	70	Images/Set1/22	Certainty:	94.2241	23.0338 dB	
+Test_PSNR	80	Images/Set1/22	Certainty:	96.2211	22.1182 dB	
+Test_PSNR	90	Images/Set1/22	Certainty:	99.2164	20.9091 dB	
+Test_PSNR	100	Images/Set1/22	Certainty:	101.213	20.1807 dB	
+Test_PSNR	10	Images/Set1/23	Certainty:	70.2946	38.6211 dB	
+Test_PSNR	20	Images/Set1/23	Certainty:	72.2806	34.1871 dB	
+Test_PSNR	30	Images/Set1/23	Certainty:	75.2586	30.1067 dB	
+Test_PSNR	40	Images/Set1/23	Certainty:	77.2425	28.1694 dB	
+Test_PSNR	50	Images/Set1/23	Certainty:	80.2186	25.8922 dB	
+Test_PSNR	60	Images/Set1/23	Certainty:	82.202	24.65 dB	
+Test_PSNR	70	Images/Set1/23	Certainty:	85.176	23.0676 dB	
+Test_PSNR	80	Images/Set1/23	Certainty:	87.158	22.1533 dB	
+Test_PSNR	90	Images/Set1/23	Certainty:	90.1297	20.9408 dB	
+Test_PSNR	100	Images/Set1/23	Certainty:	92.1101	20.2175 dB	
+Test_PSNR	10	Images/Set1/24	Certainty:	115.036	38.6097 dB	
+Test_PSNR	20	Images/Set1/24	Certainty:	117.026	34.1814 dB	
+Test_PSNR	30	Images/Set1/24	Certainty:	120.006	30.1033 dB	
+Test_PSNR	40	Images/Set1/24	Certainty:	121.99	28.1687 dB	
+Test_PSNR	50	Images/Set1/24	Certainty:	124.959	25.8972 dB	
+Test_PSNR	60	Images/Set1/24	Certainty:	126.935	24.6593 dB	
+Test_PSNR	70	Images/Set1/24	Certainty:	129.891	23.085 dB	
+Test_PSNR	80	Images/Set1/24	Certainty:	131.857	22.1773 dB	
+Test_PSNR	90	Images/Set1/24	Certainty:	134.799	20.9731 dB	
+Test_PSNR	100	Images/Set1/24	Certainty:	136.755	20.2562 dB	
+Test_PSNR	10	Images/Set1/3	Certainty:	99.5396	38.6532 dB	
+Test_PSNR	20	Images/Set1/3	Certainty:	101.527	34.2122 dB	
+Test_PSNR	30	Images/Set1/3	Certainty:	104.507	30.1193 dB	
+Test_PSNR	40	Images/Set1/3	Certainty:	106.493	28.1805 dB	
+Test_PSNR	50	Images/Set1/3	Certainty:	109.47	25.9052 dB	
+Test_PSNR	60	Images/Set1/3	Certainty:	111.454	24.6674 dB	
+Test_PSNR	70	Images/Set1/3	Certainty:	114.429	23.0811 dB	
+Test_PSNR	80	Images/Set1/3	Certainty:	116.41	22.167 dB	
+Test_PSNR	90	Images/Set1/3	Certainty:	119.381	20.9588 dB	
+Test_PSNR	100	Images/Set1/3	Certainty:	121.36	20.2333 dB	
+Test_PSNR	10	Images/Set1/4	Certainty:	82.9911	38.6526 dB	
+Test_PSNR	20	Images/Set1/4	Certainty:	84.9772	34.2148 dB	
+Test_PSNR	30	Images/Set1/4	Certainty:	87.9546	30.1228 dB	
+Test_PSNR	40	Images/Set1/4	Certainty:	89.9373	28.1834 dB	
+Test_PSNR	50	Images/Set1/4	Certainty:	92.9109	25.9087 dB	
+Test_PSNR	60	Images/Set1/4	Certainty:	94.892	24.6709 dB	
+Test_PSNR	70	Images/Set1/4	Certainty:	97.8615	23.0867 dB	
+Test_PSNR	80	Images/Set1/4	Certainty:	99.8398	22.1719 dB	
+Test_PSNR	90	Images/Set1/4	Certainty:	102.805	20.9639 dB	
+Test_PSNR	100	Images/Set1/4	Certainty:	104.78	20.2396 dB	
+Test_PSNR	10	Images/Set1/5	Certainty:	129.924	38.9451 dB	
+Test_PSNR	20	Images/Set1/5	Certainty:	131.817	34.5096 dB	
+Test_PSNR	30	Images/Set1/5	Certainty:	134.648	30.435 dB	
+Test_PSNR	40	Images/Set1/5	Certainty:	136.528	28.5054 dB	
+Test_PSNR	50	Images/Set1/5	Certainty:	139.334	26.2498 dB	
+Test_PSNR	60	Images/Set1/5	Certainty:	141.195	25.0243 dB	
+Test_PSNR	70	Images/Set1/5	Certainty:	143.968	23.4628 dB	
+Test_PSNR	80	Images/Set1/5	Certainty:	145.806	22.5653 dB	
+Test_PSNR	90	Images/Set1/5	Certainty:	148.549	21.381 dB	
+Test_PSNR	100	Images/Set1/5	Certainty:	150.371	20.6695 dB	
+Test_PSNR	10	Images/Set1/6	Certainty:	107.541	38.6123 dB	
+Test_PSNR	20	Images/Set1/6	Certainty:	109.539	34.1711 dB	
+Test_PSNR	30	Images/Set1/6	Certainty:	112.537	30.0772 dB	
+Test_PSNR	40	Images/Set1/6	Certainty:	114.535	28.1363 dB	
+Test_PSNR	50	Images/Set1/6	Certainty:	117.531	25.8591 dB	
+Test_PSNR	60	Images/Set1/6	Certainty:	119.529	24.6202 dB	
+Test_PSNR	70	Images/Set1/6	Certainty:	122.524	23.0333 dB	
+Test_PSNR	80	Images/Set1/6	Certainty:	124.522	22.1179 dB	
+Test_PSNR	90	Images/Set1/6	Certainty:	127.516	20.9079 dB	
+Test_PSNR	100	Images/Set1/6	Certainty:	129.512	20.1811 dB	
+Test_PSNR	10	Images/Set1/7	Certainty:	124.571	38.7848 dB	
+Test_PSNR	20	Images/Set1/7	Certainty:	126.493	34.354 dB	
+Test_PSNR	30	Images/Set1/7	Certainty:	129.361	30.2791 dB	
+Test_PSNR	40	Images/Set1/7	Certainty:	131.263	28.3593 dB	
+Test_PSNR	50	Images/Set1/7	Certainty:	134.099	26.102 dB	
+Test_PSNR	60	Images/Set1/7	Certainty:	135.98	24.874 dB	
+Test_PSNR	70	Images/Set1/7	Certainty:	138.784	23.3088 dB	
+Test_PSNR	80	Images/Set1/7	Certainty:	140.642	22.4117 dB	
+Test_PSNR	90	Images/Set1/7	Certainty:	143.407	21.2302 dB	
+Test_PSNR	100	Images/Set1/7	Certainty:	145.237	20.522 dB	
+Test_PSNR	10	Images/Set1/8	Certainty:	93.1294	38.6173 dB	
+Test_PSNR	20	Images/Set1/8	Certainty:	95.1278	34.1719 dB	
+Test_PSNR	30	Images/Set1/8	Certainty:	98.1214	30.0759 dB	
+Test_PSNR	40	Images/Set1/8	Certainty:	100.119	28.1355 dB	
+Test_PSNR	50	Images/Set1/8	Certainty:	103.115	25.8596 dB	
+Test_PSNR	60	Images/Set1/8	Certainty:	105.113	24.6213 dB	
+Test_PSNR	70	Images/Set1/8	Certainty:	108.108	23.0332 dB	
+Test_PSNR	80	Images/Set1/8	Certainty:	110.104	22.1177 dB	
+Test_PSNR	90	Images/Set1/8	Certainty:	113.098	20.9086 dB	
+Test_PSNR	100	Images/Set1/8	Certainty:	115.093	20.1816 dB	
+Test_PSNR	10	Images/Set1/9	Certainty:	158.409	38.7733 dB	
+Test_PSNR	20	Images/Set1/9	Certainty:	160.368	34.3382 dB	
+Test_PSNR	30	Images/Set1/9	Certainty:	163.301	30.2546 dB	
+Test_PSNR	40	Images/Set1/9	Certainty:	165.252	28.3184 dB	
+Test_PSNR	50	Images/Set1/9	Certainty:	168.174	26.0496 dB	
+Test_PSNR	60	Images/Set1/9	Certainty:	170.117	24.8167 dB	
+Test_PSNR	70	Images/Set1/9	Certainty:	173.023	23.2372 dB	
+Test_PSNR	80	Images/Set1/9	Certainty:	174.956	22.3288 dB	
+Test_PSNR	90	Images/Set1/9	Certainty:	177.846	21.1294 dB	
+Test_PSNR	100	Images/Set1/9	Certainty:	179.765	20.4102 dB	
+Test_PSNR	10	Images/Set2/skyline_arch	Certainty:	84.1133	39.118 dB	
+Test_PSNR	20	Images/Set2/skyline_arch	Certainty:	85.8613	34.7937 dB	
+Test_PSNR	30	Images/Set2/skyline_arch	Certainty:	88.4725	30.8763 dB	
+Test_PSNR	40	Images/Set2/skyline_arch	Certainty:	90.205	28.8591 dB	
+Test_PSNR	50	Images/Set2/skyline_arch	Certainty:	92.7907	26.6727 dB	
+Test_PSNR	60	Images/Set2/skyline_arch	Certainty:	94.5065	25.3791 dB	
+Test_PSNR	70	Images/Set2/skyline_arch	Certainty:	97.0661	23.8187 dB	
+Test_PSNR	80	Images/Set2/skyline_arch	Certainty:	98.7639	22.9151 dB	
+Test_PSNR	90	Images/Set2/skyline_arch	Certainty:	101.298	21.7187 dB	
+Test_PSNR	100	Images/Set2/skyline_arch	Certainty:	102.981	21.0071 dB	
+Test_PSNR	10	Images/Set3/Sample	Certainty:	59.5909	39.5344 dB	
+Test_PSNR	20	Images/Set3/Sample	Certainty:	61.2379	35.1197 dB	
+Test_PSNR	30	Images/Set3/Sample	Certainty:	63.7075	32.0289 dB	
+Test_PSNR	40	Images/Set3/Sample	Certainty:	65.3535	29.0793 dB	
+Test_PSNR	50	Images/Set3/Sample	Certainty:	67.8217	27.4021 dB	
+Test_PSNR	60	Images/Set3/Sample	Certainty:	69.4665	25.5723 dB	
+Test_PSNR	70	Images/Set3/Sample	Certainty:	71.9331	23.9909 dB	
+Test_PSNR	80	Images/Set3/Sample	Certainty:	73.5764	23.0663 dB	
+Test_PSNR	90	Images/Set3/Sample	Certainty:	76.0406	21.8534 dB	
+Test_PSNR	100	Images/Set3/Sample	Certainty:	77.6824	21.1355 dB	
+
+
+
+MarkBench - Bench Results  - Sat Nov 20 08.02.43 2021
+Number of tests which failed:0

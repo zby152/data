@@ -1,0 +1,67 @@
+MarkBench - Bench Report - Sun Nov 21 10.25.41 2021
+
+MS name            : Blind linear correlation technique - V demo
+MS release date    : June 2000 - Last update: February 2002
+MS contact address : fabienpe@microsoft.com
+MS source location : http://www.cl.cam.ac.uk/~fapp2/watermarking/evaluation/
+MS family type     : 6
+MS max key size    : 32
+MS max msg size    : 0
+
+
+
+
+
+---------------------------------------------------
+Test_RotationCrop -- Sun Nov 21 10.25.41 2021
+---------------------------------------------------
+Test_RotationCrop	-5	Images/Set1/1	Certainty	119.502	NA	
+Test_RotationCrop	-4	Images/Set1/1	Certainty	118.874	NA	
+Test_RotationCrop	-3	Images/Set1/1	Certainty	118.549	NA	
+Test_RotationCrop	-2	Images/Set1/1	Certainty	118.481	NA	
+Test_RotationCrop	-1	Images/Set1/1	Certainty	118.604	NA	
+Test_RotationCrop	1	Images/Set1/1	Certainty	118.724	NA	
+Test_RotationCrop	2	Images/Set1/1	Certainty	118.689	NA	
+Test_RotationCrop	3	Images/Set1/1	Certainty	118.819	NA	
+Test_RotationCrop	4	Images/Set1/1	Certainty	118.858	NA	
+Test_RotationCrop	5	Images/Set1/1	Certainty	118.896	NA	
+Test_RotationCrop	-5	Images/Set1/10	Certainty	113.766	NA	
+Test_RotationCrop	-4	Images/Set1/10	Certainty	113.827	NA	
+Test_RotationCrop	-3	Images/Set1/10	Certainty	113.995	NA	
+Test_RotationCrop	-2	Images/Set1/10	Certainty	114.119	NA	
+Test_RotationCrop	-1	Images/Set1/10	Certainty	114.443	NA	
+Test_RotationCrop	1	Images/Set1/10	Certainty	113.909	NA	
+Test_RotationCrop	2	Images/Set1/10	Certainty	112.738	NA	
+Test_RotationCrop	3	Images/Set1/10	Certainty	111.95	NA	
+Test_RotationCrop	4	Images/Set1/10	Certainty	111.3	NA	
+Test_RotationCrop	5	Images/Set1/10	Certainty	110.756	NA	
+Test_RotationCrop	-5	Images/Set1/11	Certainty	106.751	NA	
+Test_RotationCrop	-4	Images/Set1/11	Certainty	106.047	NA	
+Test_RotationCrop	-3	Images/Set1/11	Certainty	105.275	NA	
+Test_RotationCrop	-2	Images/Set1/11	Certainty	104.309	NA	
+Test_RotationCrop	-1	Images/Set1/11	Certainty	103.229	NA	
+Test_RotationCrop	1	Images/Set1/11	Certainty	103.296	NA	
+Test_RotationCrop	2	Images/Set1/11	Certainty	104.557	NA	
+Test_RotationCrop	3	Images/Set1/11	Certainty	105.724	NA	
+Test_RotationCrop	4	Images/Set1/11	Certainty	106.747	NA	
+Test_RotationCrop	5	Images/Set1/11	Certainty	107.71	NA	
+Test_RotationCrop	-5	Images/Set1/12	Certainty	111.447	NA	
+Test_RotationCrop	-4	Images/Set1/12	Certainty	112.664	NA	
+Test_RotationCrop	-3	Images/Set1/12	Certainty	114.057	NA	
+Test_RotationCrop	-2	Images/Set1/12	Certainty	115.806	NA	
+Test_RotationCrop	-1	Images/Set1/12	Certainty	117.984	NA	
+Test_RotationCrop	1	Images/Set1/12	Certainty	118.027	NA	
+Test_RotationCrop	2	Images/Set1/12	Certainty	115.966	NA	
+Test_RotationCrop	3	Images/Set1/12	Certainty	113.935	NA	
+Test_RotationCrop	4	Images/Set1/12	Certainty	111.862	NA	
+Test_RotationCrop	5	Images/Set1/12	Certainty	110.047	NA	
+Test_RotationCrop	-5	Images/Set1/13	Certainty	118.324	NA	
+Test_RotationCrop	-4	Images/Set1/13	Certainty	117.672	NA	
+Test_RotationCrop	-3	Images/Set1/13	Certainty	116.968	NA	
+Test_RotationCrop	-2	Images/Set1/13	Certainty	116.14	NA	
+Test_RotationCrop	-1	Images/Set1/13	Certainty	115.268	NA	
+Test_RotationCrop	1	Images/Set1/13	Certainty	115.251	NA	
+Test_RotationCrop	2	Images/Set1/13	Certainty	116.104	NA	
+Test_RotationCrop	3	Images/Set1/13	Certainty	116.944	NA	
+Test_RotationCrop	4	Images/Set1/13	Certainty	117.55	NA	
+Test_RotationCrop	5	Images/Set1/13	Certainty	118.109	NA	

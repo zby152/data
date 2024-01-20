@@ -1,0 +1,57 @@
+MarkBench - Bench Report - Fri Dec 24 02.09.59 2021
+
+MS name            : Blind linear correlation technique - V demo
+MS release date    : June 2000 - Last update: February 2002
+MS contact address : fabienpe@microsoft.com
+MS source location : http://www.cl.cam.ac.uk/~fapp2/watermarking/evaluation/
+MS family type     : 6
+MS max key size    : 32
+MS max msg size    : 0
+
+
+
+
+
+---------------------------------------------------
+Test_JPEG -- Fri Dec 24 02.10.01 2021
+---------------------------------------------------
+Test_JPEG	30	Images/Set1/200000	Certainty	81.7133	37.912 dB	
+Test_JPEG	40	Images/Set1/200000	Certainty	81.7154	38.7101 dB	
+Test_JPEG	50	Images/Set1/200000	Certainty	81.5398	39.3924 dB	
+Test_JPEG	60	Images/Set1/200000	Certainty	81.576	39.9385 dB	
+Test_JPEG	70	Images/Set1/200000	Certainty	81.6152	40.7881 dB	
+Test_JPEG	80	Images/Set1/200000	Certainty	81.5652	42.0106 dB	
+Test_JPEG	90	Images/Set1/200000	Certainty	81.5451	44.5209 dB	
+Test_JPEG	100	Images/Set1/200000	Certainty	81.5311	57.3297 dB	
+Test_JPEG	30	Images/Set1/200100	Certainty	158.66	31.3582 dB	
+Test_JPEG	40	Images/Set1/200100	Certainty	158.555	32.6472 dB	
+Test_JPEG	50	Images/Set1/200100	Certainty	158.572	33.5333 dB	
+Test_JPEG	60	Images/Set1/200100	Certainty	158.488	33.9267 dB	
+Test_JPEG	70	Images/Set1/200100	Certainty	158.486	37.3456 dB	
+Test_JPEG	80	Images/Set1/200100	Certainty	158.248	45.896 dB	
+Test_JPEG	90	Images/Set1/200100	Certainty	158.576	47.2363 dB	
+Test_JPEG	100	Images/Set1/200100	Certainty	158.493	52.8344 dB	
+Test_JPEG	30	Images/Set1/200200	Certainty	135.586	33.2822 dB	
+Test_JPEG	40	Images/Set1/200200	Certainty	135.479	34.4778 dB	
+Test_JPEG	50	Images/Set1/200200	Certainty	135.485	35.4708 dB	
+Test_JPEG	60	Images/Set1/200200	Certainty	135.54	36.0376 dB	
+Test_JPEG	70	Images/Set1/200200	Certainty	135.526	38.4631 dB	
+Test_JPEG	80	Images/Set1/200200	Certainty	135.368	44.1509 dB	
+Test_JPEG	90	Images/Set1/200200	Certainty	135.655	45.9843 dB	
+Test_JPEG	100	Images/Set1/200200	Certainty	135.649	50.849 dB	
+Test_JPEG	30	Images/Set1/200300	Certainty	105.624	39.1495 dB	
+Test_JPEG	40	Images/Set1/200300	Certainty	105.652	39.5458 dB	
+Test_JPEG	50	Images/Set1/200300	Certainty	105.432	40.1465 dB	
+Test_JPEG	60	Images/Set1/200300	Certainty	105.409	40.268 dB	
+Test_JPEG	70	Images/Set1/200300	Certainty	105.471	40.792 dB	
+Test_JPEG	80	Images/Set1/200300	Certainty	105.344	41.5391 dB	
+Test_JPEG	90	Images/Set1/200300	Certainty	105.349	43.0902 dB	
+Test_JPEG	100	Images/Set1/200300	Certainty	105.34	50.4926 dB	
+Test_JPEG	30	Images/Set1/200400	Certainty	154.776	33.5809 dB	
+Test_JPEG	40	Images/Set1/200400	Certainty	154.737	34.6247 dB	
+Test_JPEG	50	Images/Set1/200400	Certainty	154.617	35.5077 dB	
+Test_JPEG	60	Images/Set1/200400	Certainty	154.691	36.3142 dB	
+Test_JPEG	70	Images/Set1/200400	Certainty	154.684	37.364 dB	
+Test_JPEG	80	Images/Set1/200400	Certainty	154.651	39.0611 dB	
+Test_JPEG	90	Images/Set1/200400	Certainty	154.647	45.2334 dB	
+Test_JPEG	100	Images/Set1/200400	Certainty	154.649	52.8165 dB	

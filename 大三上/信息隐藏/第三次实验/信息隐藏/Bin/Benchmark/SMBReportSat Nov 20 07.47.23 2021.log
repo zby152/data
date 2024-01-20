@@ -1,0 +1,66 @@
+MarkBench - Bench Report - Sat Nov 20 07.47.23 2021
+
+MS name            : Blind linear correlation technique - V demo
+MS release date    : June 2000 - Last update: February 2002
+MS contact address : fabienpe@microsoft.com
+MS source location : http://www.cl.cam.ac.uk/~fapp2/watermarking/evaluation/
+MS family type     : 6
+MS max key size    : 32
+MS max msg size    : 0
+
+
+
+
+
+---------------------------------------------------
+Test_PSNR -- Sat Nov 20 07.47.23 2021
+---------------------------------------------------
+Test_PSNR	0	Images/Set1/200100	Certainty:	145.686	1.#INF dB	
+Test_PSNR	10	Images/Set1/200100	Certainty:	148.656	38.648 dB	
+Test_PSNR	20	Images/Set1/200100	Certainty:	150.627	34.2179 dB	
+Test_PSNR	30	Images/Set1/200100	Certainty:	153.581	30.1401 dB	
+Test_PSNR	40	Images/Set1/200100	Certainty:	155.549	28.2039 dB	
+Test_PSNR	50	Images/Set1/200100	Certainty:	158.5	25.9275 dB	
+Test_PSNR	60	Images/Set1/200100	Certainty:	160.467	24.6861 dB	
+Test_PSNR	70	Images/Set1/200100	Certainty:	163.414	23.1047 dB	
+Test_PSNR	80	Images/Set1/200100	Certainty:	165.376	22.1915 dB	
+Test_PSNR	90	Images/Set1/200100	Certainty:	168.309	20.9818 dB	
+Test_PSNR	100	Images/Set1/200100	Certainty:	170.254	20.2613 dB	
+Test_PSNR	0	Images/Set1/result	Certainty:	134.839	1.#INF dB	
+Test_PSNR	10	Images/Set1/result	Certainty:	137.839	37.807 dB	
+Test_PSNR	20	Images/Set1/result	Certainty:	139.839	33.446 dB	
+Test_PSNR	30	Images/Set1/result	Certainty:	142.839	29.4719 dB	
+Test_PSNR	40	Images/Set1/result	Certainty:	144.84	27.606 dB	
+Test_PSNR	50	Images/Set1/result	Certainty:	147.84	25.4347 dB	
+Test_PSNR	60	Images/Set1/result	Certainty:	149.837	24.263 dB	
+Test_PSNR	70	Images/Set1/result	Certainty:	152.821	22.7886 dB	
+Test_PSNR	80	Images/Set1/result	Certainty:	154.794	21.9465 dB	
+Test_PSNR	90	Images/Set1/result	Certainty:	157.714	20.8097 dB	
+Test_PSNR	100	Images/Set1/result	Certainty:	159.637	20.127 dB	
+Test_PSNR	0	Images/Set2/skyline_arch	Certainty:	81.3876	1.#INF dB	
+Test_PSNR	10	Images/Set2/skyline_arch	Certainty:	84.1137	39.118 dB	
+Test_PSNR	20	Images/Set2/skyline_arch	Certainty:	85.8617	34.7938 dB	
+Test_PSNR	30	Images/Set2/skyline_arch	Certainty:	88.4729	30.8764 dB	
+Test_PSNR	40	Images/Set2/skyline_arch	Certainty:	90.2054	28.8591 dB	
+Test_PSNR	50	Images/Set2/skyline_arch	Certainty:	92.7911	26.6728 dB	
+Test_PSNR	60	Images/Set2/skyline_arch	Certainty:	94.5064	25.3793 dB	
+Test_PSNR	70	Images/Set2/skyline_arch	Certainty:	97.066	23.8188 dB	
+Test_PSNR	80	Images/Set2/skyline_arch	Certainty:	98.761	22.9152 dB	
+Test_PSNR	90	Images/Set2/skyline_arch	Certainty:	101.296	21.7188 dB	
+Test_PSNR	100	Images/Set2/skyline_arch	Certainty:	102.978	21.0072 dB	
+Test_PSNR	0	Images/Set3/Sample	Certainty:	57.1173	1.#INF dB	
+Test_PSNR	10	Images/Set3/Sample	Certainty:	59.5886	39.5344 dB	
+Test_PSNR	20	Images/Set3/Sample	Certainty:	61.2356	35.1196 dB	
+Test_PSNR	30	Images/Set3/Sample	Certainty:	63.7052	32.0289 dB	
+Test_PSNR	40	Images/Set3/Sample	Certainty:	65.3512	29.0792 dB	
+Test_PSNR	50	Images/Set3/Sample	Certainty:	67.8195	27.4021 dB	
+Test_PSNR	60	Images/Set3/Sample	Certainty:	69.4643	25.5723 dB	
+Test_PSNR	70	Images/Set3/Sample	Certainty:	71.9309	23.9908 dB	
+Test_PSNR	80	Images/Set3/Sample	Certainty:	73.5743	23.0663 dB	
+Test_PSNR	90	Images/Set3/Sample	Certainty:	76.0385	21.8534 dB	
+Test_PSNR	100	Images/Set3/Sample	Certainty:	77.6802	21.1355 dB	
+
+
+
+MarkBench - Bench Results  - Sat Nov 20 07.47.38 2021
+Number of tests which failed:0

@@ -1,0 +1,67 @@
+MarkBench - Bench Report - Wed Nov 24 03.25.08 2021
+
+MS name            : Blind linear correlation technique - V demo
+MS release date    : June 2000 - Last update: February 2002
+MS contact address : fabienpe@microsoft.com
+MS source location : http://www.cl.cam.ac.uk/~fapp2/watermarking/evaluation/
+MS family type     : 6
+MS max key size    : 32
+MS max msg size    : 0
+
+
+
+
+
+---------------------------------------------------
+Test_PSNR -- Wed Nov 24 03.25.08 2021
+---------------------------------------------------
+Test_PSNR	10	Images/Set2/skyline_arch	Certainty:	84.1117	39.1179 dB	
+Test_PSNR	20	Images/Set2/skyline_arch	Certainty:	85.8596	34.7937 dB	
+Test_PSNR	30	Images/Set2/skyline_arch	Certainty:	88.4709	30.8763 dB	
+Test_PSNR	40	Images/Set2/skyline_arch	Certainty:	90.2034	28.859 dB	
+Test_PSNR	50	Images/Set2/skyline_arch	Certainty:	92.7891	26.6726 dB	
+Test_PSNR	60	Images/Set2/skyline_arch	Certainty:	94.5043	25.3791 dB	
+Test_PSNR	70	Images/Set2/skyline_arch	Certainty:	97.0639	23.8187 dB	
+Test_PSNR	80	Images/Set2/skyline_arch	Certainty:	98.7617	22.9151 dB	
+Test_PSNR	90	Images/Set2/skyline_arch	Certainty:	101.296	21.7187 dB	
+Test_PSNR	100	Images/Set2/skyline_arch	Certainty:	102.977	21.0071 dB	
+Test_PSNR	10	Images/Set3/Sample	Certainty:	59.5902	39.5344 dB	
+Test_PSNR	20	Images/Set3/Sample	Certainty:	61.2372	35.1196 dB	
+Test_PSNR	30	Images/Set3/Sample	Certainty:	63.7068	32.029 dB	
+Test_PSNR	40	Images/Set3/Sample	Certainty:	65.3528	29.0793 dB	
+Test_PSNR	50	Images/Set3/Sample	Certainty:	67.821	27.4021 dB	
+Test_PSNR	60	Images/Set3/Sample	Certainty:	69.4658	25.5723 dB	
+Test_PSNR	70	Images/Set3/Sample	Certainty:	71.9324	23.9909 dB	
+Test_PSNR	80	Images/Set3/Sample	Certainty:	73.5758	23.0663 dB	
+Test_PSNR	90	Images/Set3/Sample	Certainty:	76.04	21.8535 dB	
+Test_PSNR	100	Images/Set3/Sample	Certainty:	77.6817	21.1355 dB	
+
+
+---------------------------------------------------
+Test_RotationCrop -- Wed Nov 24 03.25.09 2021
+---------------------------------------------------
+Test_RotationCrop	-5	Images/Set2/skyline_arch	Certainty	98.2652	NA	
+Test_RotationCrop	-4	Images/Set2/skyline_arch	Certainty	97.2714	NA	
+Test_RotationCrop	-3	Images/Set2/skyline_arch	Certainty	96.3335	NA	
+Test_RotationCrop	-2	Images/Set2/skyline_arch	Certainty	95.2597	NA	
+Test_RotationCrop	-1	Images/Set2/skyline_arch	Certainty	94.2693	NA	
+Test_RotationCrop	1	Images/Set2/skyline_arch	Certainty	94.4339	NA	
+Test_RotationCrop	2	Images/Set2/skyline_arch	Certainty	95.673	NA	
+Test_RotationCrop	3	Images/Set2/skyline_arch	Certainty	97.023	NA	
+Test_RotationCrop	4	Images/Set2/skyline_arch	Certainty	98.2263	NA	
+Test_RotationCrop	5	Images/Set2/skyline_arch	Certainty	99.4517	NA	
+Test_RotationCrop	-5	Images/Set3/Sample	Certainty	72.2026	NA	
+Test_RotationCrop	-4	Images/Set3/Sample	Certainty	71.5803	NA	
+Test_RotationCrop	-3	Images/Set3/Sample	Certainty	70.4875	NA	
+Test_RotationCrop	-2	Images/Set3/Sample	Certainty	69.411	NA	
+Test_RotationCrop	-1	Images/Set3/Sample	Certainty	68.3699	NA	
+Test_RotationCrop	1	Images/Set3/Sample	Certainty	68.372	NA	
+Test_RotationCrop	2	Images/Set3/Sample	Certainty	69.4081	NA	
+Test_RotationCrop	3	Images/Set3/Sample	Certainty	70.4569	NA	
+Test_RotationCrop	4	Images/Set3/Sample	Certainty	71.3073	NA	
+Test_RotationCrop	5	Images/Set3/Sample	Certainty	71.6664	NA	
+
+
+
+MarkBench - Bench Results  - Wed Nov 24 03.25.10 2021
+Number of tests which failed:0

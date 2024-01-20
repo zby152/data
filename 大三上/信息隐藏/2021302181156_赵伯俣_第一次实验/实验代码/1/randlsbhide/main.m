@@ -1,0 +1,1 @@
+randlsbhide ('Lena.bmp','m.txt', 'scover.bmp', 2001 );

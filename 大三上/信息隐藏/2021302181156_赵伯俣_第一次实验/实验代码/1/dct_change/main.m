@@ -1,0 +1,1 @@
+comimage = dctcom('Lena.bmp','bmp')

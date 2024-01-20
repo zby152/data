@@ -1,0 +1,9 @@
+randlsbhide.m为LSB隐藏函数，使用函数开始注释中的指令调用函数后会生成隐写后的图片scover.bmp
+
+m.txt时隐写秘密信息
+
+draw.m是绘制隐写前图像和隐写后图像的直方图的函数
+
+compare.m是显示选取的随机点位置绘图的函数。
+
+randinterval是通过密钥随机生成一系列坐标的函数
