@@ -1,0 +1,25 @@
+THIRD QUEUE:  TestG TestA TestB TestC TestD TestE TestF
+Ready.
+FIRST QUEUE:
+SECOND QUEUE: ...............
+THIRD QUEUE:  TestA TestB TestC TestD TestE TestF TestG
+
+FIRST QUEUE:  AddrH LengthLow LengthHigh   Type
+SECOND QUEUE: 0000h 0009F000h 00000000h 00000001h
+THIRD QUEUE:  TestB TestC TestD TestE TestF TestG TestA
+000E8000h 00000000h 00018000h 00000000h 00000002h
+FIRST QUEUE:  0000h 01EF0000h 00000000h 00000001h
+SECOND QUEUE: 0000h 00010000h 00000000h 00000003h
+THIRD QUEUE:  TestC TestD TestE TestF TestG TestA TestB
+
+FIRST QUEUE:  TestG
+SECOND QUEUE: begins-----
+THIRD QUEUE:  TestD TestE TestF TestG TestA TestB TestC
+-----"kernel_main" begins-----
+FIRST QUEUE:  TestA TestB TestC TestD TestE TestF TestG
+SECOND QUEUE: TestG
+THIRD QUEUE:  TestE TestF TestG TestA TestB TestC TestD
+
+FIRST QUEUE:  TestB TestC TestD TestE TestF TestG
+SECOND QUEUE: TestA
+THIRD QUEUE:  TestF TestG TestA TestB TestC TestD TestE

@@ -1,0 +1,1380 @@
+boot/boot.asm:  nasm Boot.asm -o Boot.com 
+boot/boot.asm: 	mov	es, ax			; es <- LOADER_SEG
+boot/boot.asm: 	mov	bx, LOADER_OFF		; bx <- LOADER_OFF	
+boot/boot.asm: 	mov	ax, [wSectorNo]		; ax <- Root Directory 
+boot/boot.asm: 	mov	si, LoaderFileName	; ds:si -> "LOADER  BIN"
+boot/boot.asm: 	mov	di, LOADER_OFF		; es:di -> LOADER_SEG:0100 = LOADER_SEG*10h+100
+boot/boot.asm: 	lodsb				; ds:si -> al
+boot/boot.asm: 	and	di, 0FFE0h		; di -> 
+boot/boot.asm: 	add	di, 01Ah		; di -> 
+boot/boot.asm: 	mov	es, ax			; es <- LOADER_SEG
+boot/boot.asm: 	mov	bx, LOADER_OFF		; bx <- LOADER_OFF	
+boot/boot.asm: 	mov	ax, cx			; ax <- Sector 
+boot/boot.asm: ;----------------------------------------------------------------------------
+boot/boot.asm: ;----------------------------------------------------------------------------
+boot/boot.asm: ;----------------------------------------------------------------------------
+boot/boot.asm: ;----------------------------------------------------------------------------
+boot/boot.asm: (0-based)
+boot/boot.asm: ;----------------------------------------------------------------------------
+boot/boot.asm: ;----------------------------------------------------------------------------
+boot/boot.asm: 	; -----------------------------------------------------------------------
+boot/boot.asm:  -> 
+boot/boot.asm: 	; -----------------------------------------------------------------------
+boot/boot.asm: 	; -------------- => 
+boot/boot.asm: : byte [bp-2]
+boot/boot.asm: 	mov	byte [bp-2], cl
+boot/boot.asm: 	mov	cl, ah			; cl <- 
+boot/boot.asm: 	mov	dh, al			; dh <- y
+boot/boot.asm: 	mov	ch, al			; ch <- 
+boot/boot.asm: 	mov	al, byte [bp-2]		; 
+boot/boot.asm: ;----------------------------------------------------------------------------
+boot/boot.asm: ;----------------------------------------------------------------------------
+boot/boot.asm: 	div	bx			; dx:ax / 2  ==>  ax <- 
+boot/boot.asm: , dx <- 
+boot/boot.asm: 	div	bx			; dx:ax / BPB_BytsPerSec  ==>	ax <- 
+boot/boot.asm: 					;				dx <- 
+boot/boot.asm: 	mov	bx, 0			; bx <- 0	
+boot/boot.asm: , es:bx = (LOADER_SEG - 100):00 = (LOADER_SEG - 100) * 10h
+boot/boot.asm: ;----------------------------------------------------------------------------
+boot/boot.asm: times 	510-($-$$)	db	0	; 
+boot/hdboot.asm: lba_addr:		dd	0		; [ 8] Starting LBA address. Low  32-bits.
+boot/hdboot.asm: 			dd	0		; [12] Starting LBA address. High 32-bits.
+boot/hdboot.asm: 	push	bx		; <- save
+boot/hdboot.asm: 	;;     es:bx -> dir_entry @ disk
+boot/hdboot.asm: 	;;     ds:si -> filename we want
+boot/hdboot.asm: 	lodsb				; ds:si -> al
+boot/hdboot.asm: 	pop	bx		; -> restore
+boot/hdboot.asm: 	mov	eax, [es:bx]		; eax <- inode nr of loader
+boot/hdboot.asm: 	call	get_inode		; eax <- start sector nr of loader
+boot/hdboot.asm: 	sub	ecx, SECT_BUF_SIZE	; bytes_left -= SECT_BUF_SIZE
+boot/hdboot.asm: ;----------------------------------------------------------------------------
+boot/hdboot.asm: ;----------------------------------------------------------------------------
+boot/hdboot.asm: ;----------------------------------------------------------------------------
+boot/hdboot.asm: (0-based)
+boot/hdboot.asm: ;----------------------------------------------------------------------------
+boot/hdboot.asm: ;----------------------------------------------------------------------------
+boot/hdboot.asm: ;     - fields disk_address_packet should have been filled
+boot/hdboot.asm: ;     - es:bx -> data read
+boot/hdboot.asm: ;     - eax, ebx, dl, si, es
+boot/hdboot.asm: ;----------------------------------------------------------------------------
+boot/hdboot.asm: ;----------------------------------------------------------------------------
+boot/hdboot.asm: ;     - eax    : inode nr.
+boot/hdboot.asm: ;     - eax    : sector nr.
+boot/hdboot.asm: ;     - ecx    : the_inode.i_size
+boot/hdboot.asm: ;     - es:ebx : inodes sector buffer
+boot/hdboot.asm: ;     - eax, ebx, ecx, edx
+boot/hdboot.asm: 	dec	eax				; eax <-  inode_nr -1
+boot/hdboot.asm: 	mul	bl				; eax <- (inode_nr - 1) * INODE_SIZE
+boot/hdboot.asm: 	pop	eax				; [es:ebx+eax] -> the inode
+boot/hdboot.asm: 	add	edx, eax			; [es:edx] -> the_inode.i_size
+boot/hdboot.asm: 	mov	ecx, [es:edx]			; ecx <- the_inode.i_size
+boot/hdboot.asm: 	add	ax, word [fs:SB_INODE_START_OFF]; es:[ebx+eax] -> the_inode.i_start_sect
+boot/hdboot.asm: 	add	eax, ROOT_BASE			; eax <- the_inode.i_start_sect
+boot/hdboot.asm: times 	510-($-$$)	db	0	; 
+boot/hdloader.asm: lba_addr:		dd	0		; [ 8] Starting LBA address. Low  32-bits.
+boot/hdloader.asm: 			dd	0		; [12] Starting LBA address. High 32-bits.
+boot/hdloader.asm: ; GDT ------------------------------------------------------------------------------------------------------------------------------------------------------------
+boot/hdloader.asm: ; GDT ------------------------------------------------------------------------------------------------------------------------------------------------------------
+boot/hdloader.asm: GdtLen		equ	$ - LABEL_GDT
+boot/hdloader.asm: GdtPtr		dw	GdtLen - 1				; 
+boot/hdloader.asm: ; The base linear address and limit of the GDT must be loaded into the GDTR register. -- IA-32 Software Developer
+boot/hdloader.asm:  ----------------------------------------------------------------------------------
+boot/hdloader.asm: SelectorFlatC		equ	LABEL_DESC_FLAT_C	- LABEL_GDT
+boot/hdloader.asm: SelectorFlatRW		equ	LABEL_DESC_FLAT_RW	- LABEL_GDT
+boot/hdloader.asm: SelectorVideo		equ	LABEL_DESC_VIDEO	- LABEL_GDT + SA_RPL3
+boot/hdloader.asm:  ----------------------------------------------------------------------------------
+boot/hdloader.asm: LABEL_START:			; <--- 
+boot/hdloader.asm: 	mov	eax, [fs:SB_ROOT_INODE] ; fs -> super_block (see hdboot.asm)
+boot/hdloader.asm: 	push	bx		; <- save
+boot/hdloader.asm: 	;;     es:bx -> dir_entry @ disk
+boot/hdloader.asm: 	;;     ds:si -> filename we want
+boot/hdloader.asm: 	lodsb				; ds:si -> al
+boot/hdloader.asm: 	pop	bx		; -> restore
+boot/hdloader.asm: 	mov	eax, [es:bx]		; eax <- inode nr of kernel
+boot/hdloader.asm: 	call	get_inode		; eax <- start sector nr of kernel
+boot/hdloader.asm: 	sub	ecx, SECT_BUF_SIZE	; bytes_left -= SECT_BUF_SIZE
+boot/hdloader.asm:  -------------------------------------------
+boot/hdloader.asm: ;----------------------------------------------------------------------------
+boot/hdloader.asm: ;----------------------------------------------------------------------------
+boot/hdloader.asm: ;----------------------------------------------------------------------------
+boot/hdloader.asm: ;----------------------------------------------------------------------------
+boot/hdloader.asm: (0-based)
+boot/hdloader.asm: ;----------------------------------------------------------------------------
+boot/hdloader.asm: ;----------------------------------------------------------------------------
+boot/hdloader.asm: ;     - fields disk_address_packet should have been filled
+boot/hdloader.asm: ;     - es:bx -> data read
+boot/hdloader.asm: ;     - eax, ebx, dl, si, es
+boot/hdloader.asm: ;----------------------------------------------------------------------------
+boot/hdloader.asm: ;----------------------------------------------------------------------------
+boot/hdloader.asm: ;     - eax    : inode nr.
+boot/hdloader.asm: ;     - eax    : sector nr.
+boot/hdloader.asm: ;     - ecx    : the_inode.i_size
+boot/hdloader.asm: ;     - es:ebx : inodes sector buffer
+boot/hdloader.asm: ;     - eax, ebx, ecx, edx
+boot/hdloader.asm: 	dec	eax				; eax <-  inode_nr -1
+boot/hdloader.asm: 	mul	bl				; eax <- (inode_nr - 1) * INODE_SIZE
+boot/hdloader.asm: 	pop	eax				; [es:ebx+eax] -> the inode
+boot/hdloader.asm: 	add	edx, eax			; [es:edx] -> the_inode.i_size
+boot/hdloader.asm: 	mov	ecx, [es:edx]			; ecx <- the_inode.i_size
+boot/hdloader.asm: 	add	ax, word [fs:SB_INODE_START_OFF]; es:[ebx+eax] -> the_inode.i_start_sect
+boot/hdloader.asm: 	add	eax, ROOT_BASE			; eax <- the_inode.i_start_sect
+boot/hdloader.asm:  ----------------------------------------------------
+boot/hdloader.asm:  ---------------------------------------------------------
+boot/hdloader.asm:  PAGE_DIR_BASE  <- 1M
+boot/hdloader.asm:  -Ttext 
+boot/hdloader.asm:  -Ttext 
+boot/hdloader.asm: ; ------------------------------------------------------------------------
+boot/hdloader.asm: ; ------------------------------------------------------------------------
+boot/hdloader.asm: -------------------------------------------------------------
+boot/hdloader.asm: ; ------------------------------------------------------------------------
+boot/hdloader.asm: ; ------------------------------------------------------------------------
+boot/hdloader.asm: ------------------------------------------------------------
+boot/hdloader.asm: ; ------------------------------------------------------------------------
+boot/hdloader.asm: ; ------------------------------------------------------------------------
+boot/hdloader.asm: ------------------------------------------------------------
+boot/hdloader.asm: ; ------------------------------------------------------------------------
+boot/hdloader.asm: ; ------------------------------------------------------------------------
+boot/hdloader.asm: ---------------------------------------------------------
+boot/hdloader.asm: ; ------------------------------------------------------------------------
+boot/hdloader.asm: ; ------------------------------------------------------------------------
+boot/hdloader.asm: ; ------------------------------------------------------------------------
+boot/hdloader.asm: -------------------------------------------------------------
+boot/hdloader.asm:  --------------------------------------------------------------
+boot/hdloader.asm: ; ---------------------------------------------------------------------------
+boot/hdloader.asm:  --------------------------------------------------------------
+boot/hdloader.asm: ;;; ; ---------------------------------------------------------------------------
+boot/hdloader.asm:  --------------------------------------------------------------
+boot/hdloader.asm:  ----------------------------------------------------------
+boot/hdloader.asm: ; InitKernel ---------------------------------------------------------------------------------
+boot/hdloader.asm: ; --------------------------------------------------------------------------------------------
+boot/hdloader.asm:  ecx <- pELFHdr->e_phnum
+boot/hdloader.asm: 	mov	esi, [KERNEL_FILE_PHY_ADDR + 1Ch]	; esi <- pELFHdr->e_phoff
+boot/hdloader.asm: 	add	esi, KERNEL_FILE_PHY_ADDR		; esi <- OffsetOfKernel + pELFHdr->e_phoff
+boot/hdloader.asm:  ::memcpy(	(void*)(pPHdr->p_vaddr),
+boot/hdloader.asm: 		uchCode + pPHdr->p_offset,
+boot/hdloader.asm: 		pPHdr->p_filesz;
+boot/hdloader.asm: 	add	esi, 020h			; esi += pELFHdr->e_phentsize
+boot/hdloader.asm:  ---------------------------------------------------------------------------------------------
+boot/loader.asm: ; GDT ------------------------------------------------------------------------------------------------------------------------------------------------------------
+boot/loader.asm: ; GDT ------------------------------------------------------------------------------------------------------------------------------------------------------------
+boot/loader.asm: GdtLen		equ	$ - LABEL_GDT
+boot/loader.asm: GdtPtr		dw	GdtLen - 1				; 
+boot/loader.asm: ; The base linear address and limit of the GDT must be loaded into the GDTR register. -- IA-32 Software Developer
+boot/loader.asm:  ----------------------------------------------------------------------------------
+boot/loader.asm: SelectorFlatC		equ	LABEL_DESC_FLAT_C	- LABEL_GDT
+boot/loader.asm: SelectorFlatRW		equ	LABEL_DESC_FLAT_RW	- LABEL_GDT
+boot/loader.asm: SelectorVideo		equ	LABEL_DESC_VIDEO	- LABEL_GDT + SA_RPL3
+boot/loader.asm:  ----------------------------------------------------------------------------------
+boot/loader.asm: LABEL_START:			; <--- 
+boot/loader.asm: 	mov	es, ax			; es <- KERNEL_FILE_SEG
+boot/loader.asm: 	mov	bx, KERNEL_FILE_OFF	; bx <- KERNEL_FILE_OFF	
+boot/loader.asm: 	mov	ax, [wSectorNo]		; ax <- Root Directory 
+boot/loader.asm: 	mov	si, KernelFileName	; ds:si -> "KERNEL  BIN"
+boot/loader.asm: 	mov	di, KERNEL_FILE_OFF	; es:di -> KERNEL_FILE_SEG:???? = KERNEL_FILE_SEG*10h+????
+boot/loader.asm: 	lodsb				; ds:si -> al
+boot/loader.asm: 	and	di, 0FFF0h		; di -> 
+boot/loader.asm: 	add	di, 01Ah		; di -> 
+boot/loader.asm: 	mov	es, ax			; es <- KERNEL_FILE_SEG
+boot/loader.asm: 	mov	bx, KERNEL_FILE_OFF	; bx <- KERNEL_FILE_OFF	
+boot/loader.asm: 	mov	ax, cx			; ax <- Sector 
+boot/loader.asm: ;;; 	xor	ax, ax		; ax <- 0
+boot/loader.asm: ;;; 	mov	ah, cl		; ax <- cl
+boot/loader.asm: ;;; 	and	ah, 3	   	; cl bits 7-6: high two bits of maximum cylinder number
+boot/loader.asm: ;;; 	and	cl, 3Fh		; cl bits 5-0: max sector number (1-origin)
+boot/loader.asm: ;;; 	inc	dh		; dh = 1 + max head number (0-origin)
+boot/loader.asm: 	                        ; CL = sector number 1-63 (bits 0-5)
+boot/loader.asm: 	                        ;      high two bits of cylinder (bits 6-7, hard disk only)
+boot/loader.asm: 	mov     bx, 500h        ; ES:BX -> data buffer
+boot/loader.asm:  -------------------------------------------
+boot/loader.asm: ;----------------------------------------------------------------------------
+boot/loader.asm: ;----------------------------------------------------------------------------
+boot/loader.asm: ;----------------------------------------------------------------------------
+boot/loader.asm: ;----------------------------------------------------------------------------
+boot/loader.asm: (0-based)
+boot/loader.asm: ;----------------------------------------------------------------------------
+boot/loader.asm: ;----------------------------------------------------------------------------
+boot/loader.asm: 	; -----------------------------------------------------------------------
+boot/loader.asm:  -> 
+boot/loader.asm: 	; -----------------------------------------------------------------------
+boot/loader.asm: 	; -------------- => 
+boot/loader.asm: : byte [bp-2]
+boot/loader.asm: 	mov	byte [bp-2], cl
+boot/loader.asm: 	mov	cl, ah			; cl <- 
+boot/loader.asm: 	mov	dh, al			; dh <- y
+boot/loader.asm: 	mov	ch, al			; ch <- 
+boot/loader.asm: 	mov	al, byte [bp-2]		; 
+boot/loader.asm: ;----------------------------------------------------------------------------
+boot/loader.asm: ;----------------------------------------------------------------------------
+boot/loader.asm: 	div	bx			; dx:ax / 2  ==>  ax <- 
+boot/loader.asm: , dx <- 
+boot/loader.asm: 	div	bx			; dx:ax / BPB_BytsPerSec  ==>	ax <- 
+boot/loader.asm: 					;				dx <- 
+boot/loader.asm: 	mov	bx, 0			; bx <- 0	
+boot/loader.asm: , es:bx = (KERNEL_FILE_SEG - 100):00 = (KERNEL_FILE_SEG - 100) * 10h
+boot/loader.asm: ;----------------------------------------------------------------------------
+boot/loader.asm: ;----------------------------------------------------------------------------
+boot/loader.asm: ;----------------------------------------------------------------------------
+boot/loader.asm: ;----------------------------------------------------------------------------
+boot/loader.asm:  ----------------------------------------------------
+boot/loader.asm:  ---------------------------------------------------------
+boot/loader.asm: 	mov	[BOOT_PARAM_ADDR + 8], eax ; phy-addr of kernel.bin
+boot/loader.asm:  PAGE_DIR_BASE  <- 1M
+boot/loader.asm:  -Ttext 
+boot/loader.asm:  -Ttext 
+boot/loader.asm: ; ------------------------------------------------------------------------
+boot/loader.asm: ; ------------------------------------------------------------------------
+boot/loader.asm: -------------------------------------------------------------
+boot/loader.asm: ; ------------------------------------------------------------------------
+boot/loader.asm: ; ------------------------------------------------------------------------
+boot/loader.asm: ------------------------------------------------------------
+boot/loader.asm: ; ------------------------------------------------------------------------
+boot/loader.asm: ; ------------------------------------------------------------------------
+boot/loader.asm: ------------------------------------------------------------
+boot/loader.asm: ; ------------------------------------------------------------------------
+boot/loader.asm: ; ------------------------------------------------------------------------
+boot/loader.asm: ---------------------------------------------------------
+boot/loader.asm: ; ------------------------------------------------------------------------
+boot/loader.asm: ; ------------------------------------------------------------------------
+boot/loader.asm: ; ------------------------------------------------------------------------
+boot/loader.asm: -------------------------------------------------------------
+boot/loader.asm:  --------------------------------------------------------------
+boot/loader.asm: ; ---------------------------------------------------------------------------
+boot/loader.asm:  --------------------------------------------------------------
+boot/loader.asm: ;;; ; ---------------------------------------------------------------------------
+boot/loader.asm:  --------------------------------------------------------------
+boot/loader.asm:  ----------------------------------------------------------
+boot/loader.asm: ; InitKernel ---------------------------------------------------------------------------------
+boot/loader.asm: ; --------------------------------------------------------------------------------------------
+boot/loader.asm:  ecx <- pELFHdr->e_phnum
+boot/loader.asm: 	mov	esi, [KERNEL_FILE_PHY_ADDR + 1Ch]	; esi <- pELFHdr->e_phoff
+boot/loader.asm: 	add	esi, KERNEL_FILE_PHY_ADDR		; esi <- OffsetOfKernel + pELFHdr->e_phoff
+boot/loader.asm:  ::memcpy(	(void*)(pPHdr->p_vaddr),
+boot/loader.asm: 		uchCode + pPHdr->p_offset,
+boot/loader.asm: 		pPHdr->p_filesz;
+boot/loader.asm: 	add	esi, 020h			; esi += pELFHdr->e_phentsize
+boot/loader.asm:  ---------------------------------------------------------------------------------------------
+command/cat: GCC: (Ubuntu 4.8.4-2ubuntu1~14.04.4) 4.8.4
+command/cat.c: 		fd = -1;
+command/cat.o: GCC: (Ubuntu 4.8.4-2ubuntu1~14.04.4) 4.8.4
+command/cat.o: .note.GNU-stack
+command/echo: GCC: (Ubuntu 4.8.4-2ubuntu1~14.04.4) 4.8.4
+command/echo.o: GCC: (Ubuntu 4.8.4-2ubuntu1~14.04.4) 4.8.4
+command/echo.o: .note.GNU-stack
+command/inst.tar: -\|/1234567890abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZZ[X
+command/inst.tar: -----"cstart" begins-----
+command/inst.tar: -----"cstart" finished-----
+command/inst.tar: fd != -1
+command/inst.tar: tty->tty_req_buf
+command/inst.tar: tty->tty_procnr != NO_TASK
+command/inst.tar: --------------------------------
+command/inst.tar: con->cursor - con->orig < con->con_size
+command/inst.tar: Exception! --> 
+command/inst.tar: #SS Stack-Segment Fault
+command/inst.tar: #MF x87 FPU Floating-Point Error (Math Fault)
+command/inst.tar: #XF SIMD Floating-Point Exception
+command/inst.tar: mla->source != src_dest
+command/inst.tar: p->p_flags
+command/inst.tar: p->p_flags == 0
+command/inst.tar: p->p_msg
+command/inst.tar: ->%s
+command/inst.tar: >>DEADLOCK<< %s->%s
+command/inst.tar: p_dest->p_msg
+command/inst.tar: p_dest->p_flags == 0
+command/inst.tar: p_dest->p_msg == 0
+command/inst.tar: p_dest->p_recvfrom == NO_TASK
+command/inst.tar: p_dest->p_sendto == NO_TASK
+command/inst.tar: sender->p_flags == 0
+command/inst.tar: sender->p_msg == 0
+command/inst.tar: sender->p_recvfrom == NO_TASK
+command/inst.tar: sender->p_sendto == NO_TASK
+command/inst.tar: sender->p_flags == SENDING
+command/inst.tar: sender->p_msg != 0
+command/inst.tar: sender->p_sendto == dest
+command/inst.tar: p_who_wanna_recv->p_flags == 0
+command/inst.tar: p_who_wanna_recv->p_msg == 0
+command/inst.tar: p_who_wanna_recv->p_sendto == NO_TASK
+command/inst.tar: p_who_wanna_recv->has_int_msg == 0
+command/inst.tar: p_who_wanna_recv->p_recvfrom == NO_TASK
+command/inst.tar: p_who_wanna_recv->q_sending != 0
+command/inst.tar: p_from->p_flags == SENDING
+command/inst.tar: p_from->p_msg != 0
+command/inst.tar: p_from->p_recvfrom == NO_TASK
+command/inst.tar: p_from->p_sendto == proc2pid(p_who_wanna_recv)
+command/inst.tar: p_from->p_flags & SENDING
+command/inst.tar: p_from->p_msg
+command/inst.tar: p_who_wanna_recv->p_flags == RECEIVING
+command/inst.tar: p_who_wanna_recv->p_msg != 0
+command/inst.tar: p_who_wanna_recv->p_recvfrom != NO_TASK
+command/inst.tar: p->p_msg == 0
+command/inst.tar: p->p_recvfrom == NO_TASK
+command/inst.tar: p->p_sendto == NO_TASK
+command/inst.tar: memcmp(pbp->kernel_file, ELFMAG, SELFMAG) == 0
+command/inst.tar: prog_hdr->p_vaddr + prog_hdr->p_memsz < PROC_IMAGE_SIZE_DEFAULT
+command/inst.tar: sb->magic == MAGIC_V1
+command/inst.tar: INSTALL_START_SECT + INSTALL_NR_SECTS < sb.nr_sects - NR_SECTS_FOR_LOG
+command/inst.tar: pinode->i_cnt > 0
+command/inst.tar: pin->i_num == ROOT_INODE
+command/inst.tar: pin->i_mode == I_REGULAR
+command/inst.tar: inode-map is probably full.
+command/inst.tar: (pcaller->filp[fd] >= &f_desc_table[0]) && (pcaller->filp[fd] < &f_desc_table[NR_FILE_DESC])
+command/inst.tar: pin->i_mode == I_REGULAR || pin->i_mode == I_DIRECTORY
+command/inst.tar: {FS} cannot remove file %s, because pin->i_cnt is %d.
+command/inst.tar: <%d-%02d-%02d %02d:%02d:%02d>
+command/inst.tar: 			label = "<f0>sect %xh-%xh
+command/inst.tar: 			label = "<f0> %d|<f2> i_size:0x%x|<f3> sect: %xh-%xh
+command/inst.tar: 	"inodearray%d":f0 -> "rootdirent%d":f0;
+command/inst.tar: 	"proc%d":f0 -> "proc%d":f0 [arrowhead="crow", color="green", label="%d"];
+command/inst.tar: 	"proc%d":f0 -> "proc%d":f0 [arrowhead="vee", color="blue", label="%d"];
+command/inst.tar: 	"proc%d":f0 -> "proc%d":f0 [arrowhead="dot", color="ivory3"];
+command/inst.tar: 	"proc%d":f%d -> "filedesc%d":f3;
+command/inst.tar: 	"filedesc%d":f4 -> "inode%d":f6;
+command/inst.tar: 	"inode%d":f7 -> "inodearray%d":f0;
+command/inst.tar: --separator--
+command/inst.tar: --------------------------------
+command/inst.tar: GCC: (Ubuntu 4.8.4-2ubuntu1~14.04.4) 4.8.4
+command/inst.tar: GCC: (Ubuntu 4.8.4-2ubuntu1~14.04.4) 4.8.4
+command/inst.tar: GCC: (Ubuntu 4.8.4-2ubuntu1~14.04.4) 4.8.4
+command/inst.tar: GCC: (Ubuntu 4.8.4-2ubuntu1~14.04.4) 4.8.4
+command/inst.tar: GCC: (Ubuntu 4.8.4-2ubuntu1~14.04.4) 4.8.4
+command/kernel.bin: -\|/1234567890abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZZ[X
+command/kernel.bin: -----"cstart" begins-----
+command/kernel.bin: -----"cstart" finished-----
+command/kernel.bin: fd != -1
+command/kernel.bin: tty->tty_req_buf
+command/kernel.bin: tty->tty_procnr != NO_TASK
+command/kernel.bin: --------------------------------
+command/kernel.bin: con->cursor - con->orig < con->con_size
+command/kernel.bin: Exception! --> 
+command/kernel.bin: #SS Stack-Segment Fault
+command/kernel.bin: #MF x87 FPU Floating-Point Error (Math Fault)
+command/kernel.bin: #XF SIMD Floating-Point Exception
+command/kernel.bin: mla->source != src_dest
+command/kernel.bin: p->p_flags
+command/kernel.bin: p->p_flags == 0
+command/kernel.bin: p->p_msg
+command/kernel.bin: ->%s
+command/kernel.bin: >>DEADLOCK<< %s->%s
+command/kernel.bin: p_dest->p_msg
+command/kernel.bin: p_dest->p_flags == 0
+command/kernel.bin: p_dest->p_msg == 0
+command/kernel.bin: p_dest->p_recvfrom == NO_TASK
+command/kernel.bin: p_dest->p_sendto == NO_TASK
+command/kernel.bin: sender->p_flags == 0
+command/kernel.bin: sender->p_msg == 0
+command/kernel.bin: sender->p_recvfrom == NO_TASK
+command/kernel.bin: sender->p_sendto == NO_TASK
+command/kernel.bin: sender->p_flags == SENDING
+command/kernel.bin: sender->p_msg != 0
+command/kernel.bin: sender->p_sendto == dest
+command/kernel.bin: p_who_wanna_recv->p_flags == 0
+command/kernel.bin: p_who_wanna_recv->p_msg == 0
+command/kernel.bin: p_who_wanna_recv->p_sendto == NO_TASK
+command/kernel.bin: p_who_wanna_recv->has_int_msg == 0
+command/kernel.bin: p_who_wanna_recv->p_recvfrom == NO_TASK
+command/kernel.bin: p_who_wanna_recv->q_sending != 0
+command/kernel.bin: p_from->p_flags == SENDING
+command/kernel.bin: p_from->p_msg != 0
+command/kernel.bin: p_from->p_recvfrom == NO_TASK
+command/kernel.bin: p_from->p_sendto == proc2pid(p_who_wanna_recv)
+command/kernel.bin: p_from->p_flags & SENDING
+command/kernel.bin: p_from->p_msg
+command/kernel.bin: p_who_wanna_recv->p_flags == RECEIVING
+command/kernel.bin: p_who_wanna_recv->p_msg != 0
+command/kernel.bin: p_who_wanna_recv->p_recvfrom != NO_TASK
+command/kernel.bin: p->p_msg == 0
+command/kernel.bin: p->p_recvfrom == NO_TASK
+command/kernel.bin: p->p_sendto == NO_TASK
+command/kernel.bin: memcmp(pbp->kernel_file, ELFMAG, SELFMAG) == 0
+command/kernel.bin: prog_hdr->p_vaddr + prog_hdr->p_memsz < PROC_IMAGE_SIZE_DEFAULT
+command/kernel.bin: sb->magic == MAGIC_V1
+command/kernel.bin: INSTALL_START_SECT + INSTALL_NR_SECTS < sb.nr_sects - NR_SECTS_FOR_LOG
+command/kernel.bin: pinode->i_cnt > 0
+command/kernel.bin: pin->i_num == ROOT_INODE
+command/kernel.bin: pin->i_mode == I_REGULAR
+command/kernel.bin: inode-map is probably full.
+command/kernel.bin: (pcaller->filp[fd] >= &f_desc_table[0]) && (pcaller->filp[fd] < &f_desc_table[NR_FILE_DESC])
+command/kernel.bin: pin->i_mode == I_REGULAR || pin->i_mode == I_DIRECTORY
+command/kernel.bin: {FS} cannot remove file %s, because pin->i_cnt is %d.
+command/kernel.bin: <%d-%02d-%02d %02d:%02d:%02d>
+command/kernel.bin: 			label = "<f0>sect %xh-%xh
+command/kernel.bin: 			label = "<f0> %d|<f2> i_size:0x%x|<f3> sect: %xh-%xh
+command/kernel.bin: 	"inodearray%d":f0 -> "rootdirent%d":f0;
+command/kernel.bin: 	"proc%d":f0 -> "proc%d":f0 [arrowhead="crow", color="green", label="%d"];
+command/kernel.bin: 	"proc%d":f0 -> "proc%d":f0 [arrowhead="vee", color="blue", label="%d"];
+command/kernel.bin: 	"proc%d":f0 -> "proc%d":f0 [arrowhead="dot", color="ivory3"];
+command/kernel.bin: 	"proc%d":f%d -> "filedesc%d":f3;
+command/kernel.bin: 	"filedesc%d":f4 -> "inode%d":f6;
+command/kernel.bin: 	"inode%d":f7 -> "inodearray%d":f0;
+command/kernel.bin: --separator--
+command/kernel.bin: --------------------------------
+command/kernel.bin: GCC: (Ubuntu 4.8.4-2ubuntu1~14.04.4) 4.8.4
+command/ls.o: GCC: (Ubuntu 4.8.4-2ubuntu1~14.04.4) 4.8.4
+command/ls.o: .note.GNU-stack
+command/Makefile: ASMFLAGS	= -I ../include/ -f elf
+command/Makefile: CFLAGS		= -I ../include/ -c -fno-builtin -fno-stack-protector -Wall
+command/Makefile: LDFLAGS		= -Ttext 0x1000
+command/Makefile: DASMFLAGS	= -D
+command/Makefile: 	cp ../boot/hd*.bin ./ -v
+command/Makefile: 	cp ../kernel.bin ./ -v
+command/Makefile: 	dd if=inst.tar of=$(HD) seek=`echo "obase=10;ibase=16;(\`egrep -e '^ROOT_BASE' ../boot/include/load.inc | sed -e 's/.*0x//g'\`+\`egrep -e '#define[[:space:]]*INSTALL_START_SECT' ../include/sys/config.h | sed -e 's/.*0x//g'\`)*200" | bc` bs=1 count=`ls -l inst.tar | awk -F " " '{print $$5}'` conv=notrunc
+command/Makefile: 	rm -f *.o
+command/Makefile: 	rm -f $(BIN) *.o
+command/Makefile: 	$(ASM) $(ASMFLAGS) -o $@ $<
+command/Makefile: 	$(CC) $(CFLAGS) -o $@ $<
+command/Makefile: 	$(LD) $(LDFLAGS) -o $@ $?
+command/Makefile: 	$(CC) $(CFLAGS) -o $@ $<
+command/Makefile: 	$(LD) $(LDFLAGS) -o $@ $?
+command/Makefile: 	$(CC) $(CFLAGS) -o $@ $<
+command/Makefile: 	 $(LD) $(LDFLAGS) -o $@ $?
+command/Makefile: 	$(CC) $(CFLAGS) -o $@ $<
+command/Makefile: 	$(LD) $(LDFLAGS) -o $@ $?
+command/pwd: GCC: (Ubuntu 4.8.4-2ubuntu1~14.04.4) 4.8.4
+command/pwd.o: GCC: (Ubuntu 4.8.4-2ubuntu1~14.04.4) 4.8.4
+command/pwd.o: .note.GNU-stack
+fs/disklog.c: 	int device = root_inode->i_dev;
+fs/disklog.c: 	int nr_log_blk0_nr = sb->nr_sects - NR_SECTS_FOR_LOG; /* 0x9D41-0x800=0x9541 */
+fs/disklog.c: 		 * set sector-map so that other files cannot use the log sectors
+fs/disklog.c: 		int smap_blk0_nr = 1 + 1 + sb->nr_imap_sects; /* 3 */
+fs/disklog.c: 					if (--bits_left  == 0)
+fs/disklog.c: 			sects_left -= chunk;
+fs/disklog.c: 		int bytes = min(bytes_left, SECTOR_SIZE - off);
+fs/disklog.c: 		bytes_left -= bytes;
+fs/disklog.c: 	sprintf((char*)logdiskbuf+32, "<%d-%02d-%02d %02d:%02d:%02d>\n",
+fs/disklog.c: 	memset(logdiskbuf+64, logdiskbuf[32+19], 512-64);
+fs/disklog.c: 	DISKLOG_WR_SECT(device, nr_log_blk0_nr + NR_SECTS_FOR_LOG - 1);
+fs/disklog.c: /*  * Get filename via i-node */
+fs/disklog.c: /* 	int dir_blk0_nr = dir_inode->i_start_sect; */
+fs/disklog.c: /* 	int nr_dir_blks = (dir_inode->i_size + SECTOR_SIZE - 1) / SECTOR_SIZE; */
+fs/disklog.c: /* 	  dir_inode->i_size / DIR_ENTRY_SIZE; /\** */
+fs/disklog.c: /* 		DISKLOG_RD_SECT(dir_inode->i_dev, dir_blk0_nr + i); */
+fs/disklog.c: /* 			if (pde->inode_nr == inode) { */
+fs/disklog.c: /* 				memcpy(filename, pde->name, MAX_FILENAME_LEN); */
+fs/disklog.c: 		if (p_proc->p_flags == FREE_SLOT)
+fs/disklog.c: 		tcks[i] = p_proc->ticks;
+fs/disklog.c: 		prio[i] = p_proc->priority;
+fs/disklog.c: 		p_proc->ticks = 0;
+fs/disklog.c: 		p_proc->priority = 0;
+fs/disklog.c: 		if (p_proc->p_flags == FREE_SLOT)
+fs/disklog.c: 		/* 	if (p_proc->filp[k] != 0) */
+fs/disklog.c: 		if (p_proc->p_parent != NO_TASK) {
+fs/disklog.c: 			ppm[ppm_idx].ppid = p_proc->p_parent;
+fs/disklog.c: 		if (p_proc->p_flags & RECEIVING) {
+fs/disklog.c: 			msd[msd_idx].src = p_proc->p_recvfrom;
+fs/disklog.c: 		if (p_proc->p_flags & SENDING) {
+fs/disklog.c: 			msd[msd_idx].dst = p_proc->p_sendto;
+fs/disklog.c: 				     p_proc->name,
+fs/disklog.c: 				     p_proc->p_flags,
+fs/disklog.c: 				     proc_flags[p_proc->p_flags],
+fs/disklog.c: 				     p_proc->p_parent,
+fs/disklog.c: 				     p_proc->p_parent == NO_TASK ? "(NO_TASK)" : "",
+fs/disklog.c: 				     p_proc->regs.eip);
+fs/disklog.c: 			if (p_proc->filp[k] == 0)
+fs/disklog.c: 			int fdesc_tbl_idx = p_proc->filp[k] - f_desc_table;
+fs/disklog.c: 		int inode_tbl_idx = f_desc_table[i].fd_inode - inode_table;
+fs/disklog.c: 	struct super_block * sb = get_super_block(root_inode->i_dev);
+fs/disklog.c: 	int smap_blk0_nr = 1 + 1 + sb->nr_imap_sects;
+fs/disklog.c: 	for (i = 0; i < sb->nr_smap_sects; i++) { /* smap_blk0_nr + i : current sect nr. */
+fs/disklog.c: 		DISKLOG_RD_SECT(root_inode->i_dev, smap_blk0_nr + i);
+fs/disklog.c: 						int bit_end = (i * SECTOR_SIZE + j) * 8 + k - 1;
+fs/disklog.c: 						logbufpos += sprintf(logbuf + logbufpos, "\t\t\tlabel = \"<f0>sect %xh-%xh",
+fs/disklog.c: 	logbufpos += sprintf(logbuf + logbufpos, "\t\tlabel = \"sector map (dev size: %xh)\";\n", sb->nr_sects);
+fs/disklog.c: 	for (i = 0; i < sb->nr_imap_sects; i++) { /* smap_blk0_nr + i : current sect nr. */
+fs/disklog.c: 		DISKLOG_RD_SECT(root_inode->i_dev, imap_blk0_nr + i);
+fs/disklog.c: 	sb = get_super_block(root_inode->i_dev);
+fs/disklog.c: 	int blk_nr = 1 + 1 + sb->nr_imap_sects + sb->nr_smap_sects;
+fs/disklog.c: 	DISKLOG_RD_SECT(root_inode->i_dev, blk_nr);
+fs/disklog.c: 		if (pinode->i_start_sect == 0)
+fs/disklog.c: 		if (pinode->i_mode) {
+fs/disklog.c: 			if (pinode->i_start_sect < sb->n_1st_sect) {
+fs/disklog.c: 				      pinode->i_start_sect,
+fs/disklog.c: 				      sb->n_1st_sect);
+fs/disklog.c: 			start_sect =  pinode->i_start_sect - sb->n_1st_sect + 1;
+fs/disklog.c: 			end_sect = start_sect + pinode->i_nr_sects - 1;
+fs/disklog.c: 					     "|<f3> sect: %xh-%xh",
+fs/disklog.c: 					     pinode->i_size,
+fs/disklog.c: 			start_sect = MAJOR(pinode->i_start_sect);
+fs/disklog.c: 			end_sect = MINOR(pinode->i_start_sect);
+fs/disklog.c: 					     pinode->i_size,
+fs/disklog.c: 	sb = get_super_block(root_inode->i_dev);
+fs/disklog.c: 	int dir_blk0_nr = root_inode->i_start_sect;
+fs/disklog.c: 	int nr_dir_blks = (root_inode->i_size + SECTOR_SIZE - 1) / SECTOR_SIZE;
+fs/disklog.c: 	  root_inode->i_size / DIR_ENTRY_SIZE; /**
+fs/disklog.c: 		DISKLOG_RD_SECT(root_inode->i_dev, dir_blk0_nr + i);
+fs/disklog.c: 			if (pde->inode_nr) {
+fs/disklog.c: 				memcpy(filename, pde->name, MAX_FILENAME_LEN);
+fs/disklog.c: 				logbufpos += sprintf(logbuf + logbufpos, "\t\t\"rootdirent%d\" [\n", pde->inode_nr);
+fs/disklog.c: 						     pde->inode_nr,
+fs/disklog.c: 						     " -> "
+fs/disklog.c: 						     pde->inode_nr, pde->inode_nr);
+fs/disklog.c: 			logbufpos += sprintf(logbuf + logbufpos, "\t\"proc%d\":f0 -> \"proc%d\":f0 "
+fs/disklog.c: 			logbufpos += sprintf(logbuf + logbufpos, "\t\"proc%d\":f0 -> \"proc%d\":f0 "
+fs/disklog.c: 		logbufpos += sprintf(logbuf + logbufpos, "\t\"proc%d\":f0 -> \"proc%d\":f0 "
+fs/disklog.c: 		logbufpos += sprintf(logbuf + logbufpos, "\t\"proc%d\":f%d -> \"filedesc%d\":f3;\n",
+fs/disklog.c: 		logbufpos += sprintf(logbuf + logbufpos, "\t\"filedesc%d\":f4 -> \"inode%d\":f6;\n",
+fs/disklog.c: 			logbufpos += sprintf(logbuf + logbufpos, "\t\"inode%d\":f7 -> \"inodearray%d\":f0;\n",
+fs/disklog.c: 	/* 	logbufpos += sprintf(logbuf + logbufpos, "\t\"inode%d\":f7 -> \"inodearray%d\":f0;\n", */
+fs/disklog.c: 	logbufpos += sprintf(logbuf + logbufpos, "--separator--\n");
+fs/disklog.c: 		int bytes = min(bytes_left, STR_DEFAULT_LEN/2 - 1);
+fs/disklog.c: 		bytes_left -= bytes;
+fs/disklog.c: 		if (p_proc->p_flags == FREE_SLOT)
+fs/disklog.c: 		p_proc->ticks = tcks[i];
+fs/disklog.c: 		p_proc->priority = prio[i];
+fs/disklog.c: 	/* int pos = logbufpos += sprintf(logbuf + logbufpos, "--separator--\n"); */
+fs/link.c:  * @note We clear the i-node in inode_array[] although it is not really needed.
+fs/link.c:  * @return On success, zero is returned.  On error, -1 is returned.
+fs/link.c: 		return -1;
+fs/link.c: 		return -1;
+fs/link.c: 		return -1;
+fs/link.c: 	struct inode * pin = get_inode(dir_inode->i_dev, inode_nr);
+fs/link.c: 	if (pin->i_mode != I_REGULAR) { /* can only remove regular files */
+fs/link.c: 		return -1;
+fs/link.c: 	if (pin->i_cnt > 1) {	/* the file was opened */
+fs/link.c: 		printl("{FS} cannot remove file %s, because pin->i_cnt is %d.\n",
+fs/link.c: 		       pathname, pin->i_cnt);
+fs/link.c: 		return -1;
+fs/link.c: 	struct super_block * sb = get_super_block(pin->i_dev);
+fs/link.c: 	/* free the bit in i-map */
+fs/link.c: 	assert(byte_idx < SECTOR_SIZE);	/* we have only one i-map sector */
+fs/link.c: 	RD_SECT(pin->i_dev, 2);
+fs/link.c: 	WR_SECT(pin->i_dev, 2);
+fs/link.c: 	/* free the bits in s-map */
+fs/link.c: 	 *           bit_idx: bit idx in the entire i-map
+fs/link.c: 	 *                  \        .-- byte_cnt: how many bytes between
+fs/link.c: 	 *        +-+-+-+-+-+-+-+-+ V +-+-+-+-+-+-+-+-+
+fs/link.c: 	 *        +-+-+-+-+-+-+-+-+   +-+-+-+-+-+-+-+-+
+fs/link.c: 	 *      byte_idx: byte idx in the entire i-map
+fs/link.c: 	bit_idx  = pin->i_start_sect - sb->n_1st_sect + 1;
+fs/link.c: 	int bits_left = pin->i_nr_sects;
+fs/link.c: 	int byte_cnt = (bits_left - (8 - (bit_idx % 8))) / 8;
+fs/link.c: 		+ sb->nr_imap_sects + byte_idx / SECTOR_SIZE;
+fs/link.c: 	RD_SECT(pin->i_dev, s);
+fs/link.c: 	for (i = bit_idx % 8; (i < 8) && bits_left; i++,bits_left--) {
+fs/link.c: 	for (k = 0; k < byte_cnt; k++,i++,bits_left-=8) {
+fs/link.c: 			WR_SECT(pin->i_dev, s);
+fs/link.c: 			RD_SECT(pin->i_dev, ++s);
+fs/link.c: 		WR_SECT(pin->i_dev, s);
+fs/link.c: 		RD_SECT(pin->i_dev, ++s);
+fs/link.c: 	WR_SECT(pin->i_dev, s);
+fs/link.c: 	/* clear the i-node itself */
+fs/link.c: 	pin->i_mode = 0;
+fs/link.c: 	pin->i_size = 0;
+fs/link.c: 	pin->i_start_sect = 0;
+fs/link.c: 	pin->i_nr_sects = 0;
+fs/link.c: 	/* set the inode-nr to 0 in the directory entry */
+fs/link.c: 	int dir_blk0_nr = dir_inode->i_start_sect;
+fs/link.c: 	int nr_dir_blks = (dir_inode->i_size + SECTOR_SIZE) / SECTOR_SIZE;
+fs/link.c: 		dir_inode->i_size / DIR_ENTRY_SIZE; /* including unused slots
+fs/link.c: 		RD_SECT(dir_inode->i_dev, dir_blk0_nr + i);
+fs/link.c: 			if (pde->inode_nr == inode_nr) {
+fs/link.c: 				/* pde->inode_nr = 0; */
+fs/link.c: 				WR_SECT(dir_inode->i_dev, dir_blk0_nr + i);
+fs/link.c: 			if (pde->inode_nr != INVALID_INODE)
+fs/link.c: 		dir_inode->i_size = dir_size;
+fs/main.c: 		sb->sb_dev = NO_DEV;
+fs/main.c: 	if (sb->magic != MAGIC_V1) {
+fs/main.c: 	assert(sb->magic == MAGIC_V1);
+fs/main.c:  *          - Write a super block to sector 1.
+fs/main.c:  *          - Create three special files: dev_tty0, dev_tty1, dev_tty2
+fs/main.c:  *          - Create a file cmd.tar
+fs/main.c:  *          - Create the inode map
+fs/main.c:  *          - Create the sector map
+fs/main.c:  *          - Create the inodes of the files
+fs/main.c:  *          - Create `/', the root directory
+fs/main.c: 	sb.inode_isize_off= (int)&x.i_size - (int)&x;
+fs/main.c: 	sb.inode_start_off= (int)&x.i_start_sect - (int)&x;
+fs/main.c: 	sb.dir_ent_inode_off = (int)&de.inode_nr - (int)&de;
+fs/main.c: 	sb.dir_ent_fname_off = (int)&de.name - (int)&de;
+fs/main.c: 				  *   || |||`--- bit 0 : reserved
+fs/main.c: 				  *   || ||`---- bit 1 : the first inode,
+fs/main.c: 				  *   || |`----- bit 2 : /dev_tty0
+fs/main.c: 				  *   || `------ bit 3 : /dev_tty1
+fs/main.c: 				  *   |`-------- bit 4 : /dev_tty2
+fs/main.c: 				  *   `--------- bit 5 : /cmd.tar
+fs/main.c: 	 *                                |    `--- bit 0 is reserved
+fs/main.c: 	 *                                `-------- for `/'
+fs/main.c: 	/* zeromemory the rest sector-map */
+fs/main.c: 	       sb.nr_sects - NR_SECTS_FOR_LOG);
+fs/main.c: 	int bit_offset = INSTALL_START_SECT -
+fs/main.c: 		sb.n_1st_sect + 1; /* sect M <-> bit (M - sb.n_1stsect + 1) */
+fs/main.c: 		bit_left--;
+fs/main.c: 	pi->i_mode = I_DIRECTORY;
+fs/main.c: 	pi->i_size = DIR_ENTRY_SIZE * 5; /* 5 files:
+fs/main.c: 	pi->i_start_sect = sb.n_1st_sect;
+fs/main.c: 	pi->i_nr_sects = NR_DEFAULT_FILE_SECTS;
+fs/main.c: 		pi->i_mode = I_CHAR_SPECIAL;
+fs/main.c: 		pi->i_size = 0;
+fs/main.c: 		pi->i_start_sect = MAKE_DEV(DEV_CHAR_TTY, i);
+fs/main.c: 		pi->i_nr_sects = 0;
+fs/main.c: 	pi->i_mode = I_REGULAR;
+fs/main.c: 	pi->i_size = INSTALL_NR_SECTS * SECTOR_SIZE;
+fs/main.c: 	pi->i_start_sect = INSTALL_START_SECT;
+fs/main.c: 	pi->i_nr_sects = INSTALL_NR_SECTS;
+fs/main.c: 	pde->inode_nr = 1;
+fs/main.c: 	strcpy(pde->name, ".");
+fs/main.c: 		pde->inode_nr = i + 2; /* dev_tty0's inode_nr is 2 */
+fs/main.c: 		sprintf(pde->name, "dev_tty%d", i);
+fs/main.c: 	(++pde)->inode_nr = NR_CONSOLES + 2;
+fs/main.c: 	sprintf(pde->name, "cmd.tar", i);
+fs/main.c: 		if (sb->sb_dev == dev)
+fs/main.c:  * <Ring 1> Get the inode ptr of given inode nr. A cache -- inode_table[] -- is
+fs/main.c:  * @param num I-node nr.
+fs/main.c: 		if (p->i_cnt) {	/* not a free slot */
+fs/main.c: 			if ((p->i_dev == dev) && (p->i_num == num)) {
+fs/main.c: 				p->i_cnt++;
+fs/main.c: 				q = p; /* q <- the 1st free slot */
+fs/main.c: 	q->i_dev = dev;
+fs/main.c: 	q->i_num = num;
+fs/main.c: 	q->i_cnt = 1;
+fs/main.c: 	int blk_nr = 1 + 1 + sb->nr_imap_sects + sb->nr_smap_sects +
+fs/main.c: 		((num - 1) / (SECTOR_SIZE / INODE_SIZE));
+fs/main.c: 				((num - 1 ) % (SECTOR_SIZE / INODE_SIZE))
+fs/main.c: 	q->i_mode = pinode->i_mode;
+fs/main.c: 	q->i_size = pinode->i_size;
+fs/main.c: 	q->i_start_sect = pinode->i_start_sect;
+fs/main.c: 	q->i_nr_sects = pinode->i_nr_sects;
+fs/main.c:  * @param pinode I-node ptr.
+fs/main.c: 	assert(pinode->i_cnt > 0);
+fs/main.c: 	pinode->i_cnt--;
+fs/main.c:  * @param p I-node ptr.
+fs/main.c: 	struct super_block * sb = get_super_block(p->i_dev);
+fs/main.c: 	int blk_nr = 1 + 1 + sb->nr_imap_sects + sb->nr_smap_sects +
+fs/main.c: 		((p->i_num - 1) / (SECTOR_SIZE / INODE_SIZE));
+fs/main.c: 	RD_SECT(p->i_dev, blk_nr);
+fs/main.c: 				 (((p->i_num - 1) % (SECTOR_SIZE / INODE_SIZE))
+fs/main.c: 	pinode->i_mode = p->i_mode;
+fs/main.c: 	pinode->i_size = p->i_size;
+fs/main.c: 	pinode->i_start_sect = p->i_start_sect;
+fs/main.c: 	pinode->i_nr_sects = p->i_nr_sects;
+fs/main.c: 	WR_SECT(p->i_dev, blk_nr);
+fs/main.c: 		if (child->filp[i]) {
+fs/main.c: 			child->filp[i]->fd_cnt++;
+fs/main.c: 			child->filp[i]->fd_inode->i_cnt++;
+fs/main.c: 		if (p->filp[i]) {
+fs/main.c: 			p->filp[i]->fd_inode->i_cnt--;
+fs/main.c: 			if (--p->filp[i]->fd_cnt == 0)
+fs/main.c: 				p->filp[i]->fd_inode = 0;
+fs/main.c: 			p->filp[i] = 0;
+fs/misc.c:  * @return  On success, zero is returned. On error, -1 is returned.
+fs/misc.c: 		return -1;
+fs/misc.c: 	pin = get_inode(dir_inode->i_dev, inode_nr);
+fs/misc.c: 	s.st_dev = pin->i_dev;
+fs/misc.c: 	s.st_ino = pin->i_num;
+fs/misc.c: 	s.st_mode= pin->i_mode;
+fs/misc.c: 	s.st_rdev= is_special(pin->i_mode) ? pin->i_start_sect : NO_DEV;
+fs/misc.c: 	s.st_size= pin->i_size;
+fs/misc.c:  * @return         Ptr to the i-node of the file if successful, otherwise zero.
+fs/misc.c: 		return dir_inode->i_num;
+fs/misc.c: 	int dir_blk0_nr = dir_inode->i_start_sect;
+fs/misc.c: 	int nr_dir_blks = (dir_inode->i_size + SECTOR_SIZE - 1) / SECTOR_SIZE;
+fs/misc.c: 	  dir_inode->i_size / DIR_ENTRY_SIZE; /**
+fs/misc.c: 		RD_SECT(dir_inode->i_dev, dir_blk0_nr + i);
+fs/misc.c: 			if (memcmp(filename, pde->name, MAX_FILENAME_LEN) == 0)
+fs/misc.c: 				return pde->inode_nr;
+fs/misc.c:  * There is no sub-folder thing.
+fs/misc.c:  * two things: the basename and a ptr of the root dir's i-node.
+fs/misc.c:  *      - filename: "blah"
+fs/misc.c:  *      - *ppinode: root_inode
+fs/misc.c:  *      - ret val:  0 (successful)
+fs/misc.c: 		return -1;
+fs/misc.c: 			return -1;
+fs/misc.c: 		if (t - filename >= MAX_FILENAME_LEN)
+fs/open.c:  *   - do_open()
+fs/open.c:  *   - do_close()
+fs/open.c:  *   - do_lseek()
+fs/open.c:  *   - create_file()
+fs/open.c: 	int fd = -1;		/* return value */
+fs/open.c: 		if (pcaller->filp[i] == 0) {
+fs/open.c: 			return -1;
+fs/open.c: 			return -1;
+fs/open.c: 			return -1;
+fs/open.c: 		pin = get_inode(dir_inode->i_dev, inode_nr);
+fs/open.c: 		return -1;
+fs/open.c: 		pin->i_size = 0;
+fs/open.c: 		pcaller->filp[fd] = &f_desc_table[i];
+fs/open.c: 		int imode = pin->i_mode & I_TYPE_MASK;
+fs/open.c: 			int dev = pin->i_start_sect;
+fs/open.c: 			assert(pin->i_num == ROOT_INODE);
+fs/open.c: 			assert(pin->i_mode == I_REGULAR);
+fs/open.c: 		return -1;
+fs/open.c:  * @return           Ptr to i-node of the new file if successful, otherwise 0.
+fs/open.c: 	int inode_nr = alloc_imap_bit(dir_inode->i_dev);
+fs/open.c: 	int free_sect_nr = alloc_smap_bit(dir_inode->i_dev,
+fs/open.c: 	struct inode *newino = new_inode(dir_inode->i_dev, inode_nr,
+fs/open.c: 	new_dir_entry(dir_inode, newino->i_num, filename);
+fs/open.c: 	put_inode(pcaller->filp[fd]->fd_inode);
+fs/open.c: 	if (--pcaller->filp[fd]->fd_cnt == 0)
+fs/open.c: 		pcaller->filp[fd]->fd_inode = 0;
+fs/open.c: 	pcaller->filp[fd] = 0;
+fs/open.c: 	int pos = pcaller->filp[fd]->fd_pos;
+fs/open.c: 	int f_size = pcaller->filp[fd]->fd_inode->i_size;
+fs/open.c: 		return -1;
+fs/open.c: 		return -1;
+fs/open.c: 	pcaller->filp[fd]->fd_pos = pos;
+fs/open.c:  * Allocate a bit in inode-map.
+fs/open.c:  * @param dev  In which device the inode-map is located.
+fs/open.c:  * @return  I-node nr.
+fs/open.c: 	for (i = 0; i < sb->nr_imap_sects; i++) {
+fs/open.c: 	panic("inode-map is probably full.\n");
+fs/open.c:  * Allocate a bit in sector-map.
+fs/open.c:  * @param dev  In which device the sector-map is located.
+fs/open.c: 	int smap_blk0_nr = 1 + 1 + sb->nr_imap_sects;
+fs/open.c: 	for (i = 0; i < sb->nr_smap_sects; i++) { /* smap_blk0_nr + i :
+fs/open.c: 					k - 1 + sb->n_1st_sect;
+fs/open.c: 				if (--nr_sects_to_alloc == 0)
+fs/open.c:  * Generate a new i-node and write it to disk.
+fs/open.c:  * @param dev  Home device of the i-node.
+fs/open.c:  * @param inode_nr  I-node nr.
+fs/open.c:  * @param start_sect  Start sector of the file pointed by the new i-node.
+fs/open.c:  * @return  Ptr of the new i-node.
+fs/open.c: 	new_inode->i_mode = I_REGULAR;
+fs/open.c: 	new_inode->i_size = 0;
+fs/open.c: 	new_inode->i_start_sect = start_sect;
+fs/open.c: 	new_inode->i_nr_sects = NR_DEFAULT_FILE_SECTS;
+fs/open.c: 	new_inode->i_dev = dev;
+fs/open.c: 	new_inode->i_cnt = 1;
+fs/open.c: 	new_inode->i_num = inode_nr;
+fs/open.c:  * @param dir_inode  I-node of the directory.
+fs/open.c:  * @param inode_nr   I-node nr of the new file.
+fs/open.c: 	int dir_blk0_nr = dir_inode->i_start_sect;
+fs/open.c: 	int nr_dir_blks = (dir_inode->i_size + SECTOR_SIZE) / SECTOR_SIZE;
+fs/open.c: 		dir_inode->i_size / DIR_ENTRY_SIZE; /**
+fs/open.c: 		RD_SECT(dir_inode->i_dev, dir_blk0_nr + i);
+fs/open.c: 			if (pde->inode_nr == 0) { /* it's a free slot */
+fs/open.c: 		dir_inode->i_size += DIR_ENTRY_SIZE;
+fs/open.c: 	new_de->inode_nr = inode_nr;
+fs/open.c: 	strcpy(new_de->name, filename);
+fs/open.c: 	/* write dir block -- ROOT dir block */
+fs/open.c: 	WR_SECT(dir_inode->i_dev, dir_blk0_nr + i);
+fs/read_write.c: 	assert((pcaller->filp[fd] >= &f_desc_table[0]) &&
+fs/read_write.c: 	       (pcaller->filp[fd] < &f_desc_table[NR_FILE_DESC]));
+fs/read_write.c: 	if (!(pcaller->filp[fd]->fd_mode & O_RDWR))
+fs/read_write.c: 	int pos = pcaller->filp[fd]->fd_pos;
+fs/read_write.c: 	struct inode * pin = pcaller->filp[fd]->fd_inode;
+fs/read_write.c: 	int imode = pin->i_mode & I_TYPE_MASK;
+fs/read_write.c: 		int dev = pin->i_start_sect;
+fs/read_write.c: 		assert(pin->i_mode == I_REGULAR || pin->i_mode == I_DIRECTORY);
+fs/read_write.c: 			pos_end = min(pos + len, pin->i_size);
+fs/read_write.c: 			bytes_left = min(len, pin->i_size - pos);
+fs/read_write.c: 			pos_end = min(pos + len, pin->i_nr_sects * SECTOR_SIZE);
+fs/read_write.c: 		int rw_sect_min=pin->i_start_sect+(pos>>SECTOR_SIZE_SHIFT);
+fs/read_write.c: 		int rw_sect_max=pin->i_start_sect+(pos_end>>SECTOR_SIZE_SHIFT);
+fs/read_write.c: 		int chunk = min(rw_sect_max - rw_sect_min + 1,
+fs/read_write.c: 			int bytes = min(bytes_left, chunk * SECTOR_SIZE - off);
+fs/read_write.c: 				  pin->i_dev,
+fs/read_write.c: 					  pin->i_dev,
+fs/read_write.c: 			pcaller->filp[fd]->fd_pos += bytes;
+fs/read_write.c: 			bytes_left -= bytes;
+fs/read_write.c: 		if (pcaller->filp[fd]->fd_pos > pin->i_size) {
+fs/read_write.c: 			pin->i_size = pcaller->filp[fd]->fd_pos;
+fs/read_write.c: 			/* write the updated i-node back to disk */
+include/stdio.h: 	int st_ino;		/* i-node number */
+include/stdio.h:  *                      USER_PROC ------------
+include/stdio.h:  FS -------------
+include/stdio.h:  *----------------------------------------------------------------------
+include/stdio.h:  *   printl: variant-parameter-version printx
+include/stdio.h:  *----------------------------------------------------------------------
+include/stdio.h:  *           USER_PROC -- -- -- -- -- --> KERNEL
+include/stdio.h:  *----------------------------------------------------------------------
+include/stdio.h: /*--------*/
+include/stdio.h: /*--------*/
+kernel/clock.c: 	if (p_proc_ready->ticks)
+kernel/clock.c: 		p_proc_ready->ticks--;
+kernel/clock.c: 	if (p_proc_ready->ticks > 0) {
+kernel/clock.c:         while(((get_ticks() - t) * 1000 / HZ) < milli_sec) {}
+kernel/console.c: 	int nr_tty = tty - tty_table;
+kernel/console.c: 	tty->console = console_table + nr_tty;
+kernel/console.c: 	tty->console->orig = nr_tty * size_per_con;
+kernel/console.c: 	tty->console->con_size = size_per_con / SCR_WIDTH * SCR_WIDTH;
+kernel/console.c: 	tty->console->cursor = tty->console->crtc_start = tty->console->orig;
+kernel/console.c: 	tty->console->is_full = 0;
+kernel/console.c: 		tty->console->cursor = disp_pos / 2;
+kernel/console.c: 			out_char(tty->console, *p == '?' ? nr_tty + '0' : *p);
+kernel/console.c: 	set_cursor(tty->console->cursor);
+kernel/console.c: 	u8* pch = (u8*)(V_MEM_BASE + con->cursor * 2);
+kernel/console.c: 	assert(con->cursor - con->orig < con->con_size);
+kernel/console.c: 	int cursor_x = (con->cursor - con->orig) % SCR_WIDTH;
+kernel/console.c: 	int cursor_y = (con->cursor - con->orig) / SCR_WIDTH;
+kernel/console.c: 		con->cursor = con->orig + SCR_WIDTH * (cursor_y + 1);
+kernel/console.c: 		if (con->cursor > con->orig) {
+kernel/console.c: 			con->cursor--;
+kernel/console.c: 			*(pch - 2) = ' ';
+kernel/console.c: 			*(pch - 1) = DEFAULT_CHAR_COLOR;
+kernel/console.c: 			con->cursor++;
+kernel/console.c: 		con->cursor++;
+kernel/console.c: 	if (con->cursor - con->orig >= con->con_size) {
+kernel/console.c: 		cursor_x = (con->cursor - con->orig) % SCR_WIDTH;
+kernel/console.c: 		cursor_y = (con->cursor - con->orig) / SCR_WIDTH;
+kernel/console.c: 		int cp_orig = con->orig + (cursor_y + 1) * SCR_WIDTH - SCR_SIZE;
+kernel/console.c: 		w_copy(con->orig, cp_orig, SCR_SIZE - SCR_WIDTH);
+kernel/console.c: 		con->crtc_start = con->orig;
+kernel/console.c: 		con->cursor = con->orig + (SCR_SIZE - SCR_WIDTH) + cursor_x;
+kernel/console.c: 		clear_screen(con->cursor, SCR_WIDTH);
+kernel/console.c: 		if (!con->is_full)
+kernel/console.c: 			con->is_full = 1;
+kernel/console.c: 	assert(con->cursor - con->orig < con->con_size);
+kernel/console.c: 	while (con->cursor >= con->crtc_start + SCR_SIZE ||
+kernel/console.c: 	       con->cursor < con->crtc_start) {
+kernel/console.c: 		clear_screen(con->cursor, SCR_WIDTH);
+kernel/console.c: 	while (--len >= 0) {
+kernel/console.c:  * @param nr_console   Console nr, range in [0, NR_CONSOLES-1].
+kernel/console.c: 	 * variables below are all in-console-offsets (based on con->orig)
+kernel/console.c: 	newest = (con->cursor - con->orig) / SCR_WIDTH * SCR_WIDTH;
+kernel/console.c: 	oldest = con->is_full ? (newest + SCR_WIDTH) % con->con_size : 0;
+kernel/console.c: 	scr_top = con->crtc_start - con->orig;
+kernel/console.c: 		if (!con->is_full && scr_top > 0) {
+kernel/console.c: 			con->crtc_start -= SCR_WIDTH;
+kernel/console.c: 		else if (con->is_full && scr_top != oldest) {
+kernel/console.c: 			if (con->cursor - con->orig >= con->con_size - SCR_SIZE) {
+kernel/console.c: 				if (con->crtc_start != con->orig)
+kernel/console.c: 					con->crtc_start -= SCR_WIDTH;
+kernel/console.c: 			else if (con->crtc_start == con->orig) {
+kernel/console.c: 				scr_top = con->con_size - SCR_SIZE;
+kernel/console.c: 				con->crtc_start = con->orig + scr_top;
+kernel/console.c: 				con->crtc_start -= SCR_WIDTH;
+kernel/console.c: 		if (!con->is_full && newest >= scr_top + SCR_SIZE) {
+kernel/console.c: 			con->crtc_start += SCR_WIDTH;
+kernel/console.c: 		else if (con->is_full && scr_top + SCR_SIZE - SCR_WIDTH != newest) {
+kernel/console.c: 			if (scr_top + SCR_SIZE == con->con_size)
+kernel/console.c: 				con->crtc_start = con->orig;
+kernel/console.c: 				con->crtc_start += SCR_WIDTH;
+kernel/console.c: 		set_cursor(con->cursor);
+kernel/console.c: 		set_video_start_addr(con->crtc_start);
+kernel/console.c: 	for (lineno = 0; lineno < con->con_size / SCR_WIDTH; lineno++) {
+kernel/console.c: 				   (con->orig + (lineno + 1) * SCR_WIDTH) * 2
+kernel/console.c: 				   - 4);
+kernel/global.c: 	/* -----        ----------        --------- */
+kernel/global.c: 	/* -----    ----------     --------- */
+kernel/global.c: 	   ----------		---------------- */
+kernel/hd.c: 			 (dev - MINOR_hd1a) / NR_SUB_PER_DRIVE)
+kernel/hd.c: 	hd_info[drive].open_cnt--;
+kernel/hd.c: 	int drive = DRV_OF_DEV(p->DEVICE);
+kernel/hd.c: 	u64 pos = p->POSITION;
+kernel/hd.c: 	int logidx = (p->DEVICE - MINOR_hd1a) % NR_SUB_PER_DRIVE;
+kernel/hd.c: 	sect_nr += p->DEVICE < MAX_PRIM ?
+kernel/hd.c: 		hd_info[drive].primary[p->DEVICE].base :
+kernel/hd.c: 	cmd.count	= (p->CNT + SECTOR_SIZE - 1) / SECTOR_SIZE;
+kernel/hd.c: 	cmd.command	= (p->type == DEV_READ) ? ATA_READ : ATA_WRITE;
+kernel/hd.c: 	int bytes_left = p->CNT;
+kernel/hd.c: 	void * la = (void*)va2la(p->PROC_NR, p->BUF);
+kernel/hd.c: 		if (p->type == DEV_READ) {
+kernel/hd.c: 		bytes_left -= SECTOR_SIZE;
+kernel/hd.c: 	int device = p->DEVICE;
+kernel/hd.c: 	if (p->REQUEST == DIOCTL_GET_GEO) {
+kernel/hd.c: 		void * dst = va2la(p->PROC_NR, p->BUF);
+kernel/hd.c: 				   &hdi->primary[device] :
+kernel/hd.c: 				   &hdi->logical[(device - MINOR_hd1a) %
+kernel/hd.c: 			hdi->primary[dev_nr].base = part_tbl[i].start_sect;
+kernel/hd.c: 			hdi->primary[dev_nr].size = part_tbl[i].nr_sects;
+kernel/hd.c: 		int ext_start_sect = hdi->primary[j].base;
+kernel/hd.c: 		int nr_1st_sub = (j - 1) * NR_SUB_PER_PART; /* 0/16/32/48 */
+kernel/hd.c: 			hdi->logical[dev_nr].base = s + part_tbl[0].start_sect;
+kernel/hd.c: 			hdi->logical[dev_nr].size = part_tbl[0].nr_sects;
+kernel/hd.c: /* 		       hdi->primary[i].base, */
+kernel/hd.c: /* 		       hdi->primary[i].base, */
+kernel/hd.c: /* 		       hdi->primary[i].size, */
+kernel/hd.c: /* 		       hdi->primary[i].size); */
+kernel/hd.c: /* 		if (hdi->logical[i].size == 0) */
+kernel/hd.c: /* 		       hdi->logical[i].base, */
+kernel/hd.c: /* 		       hdi->logical[i].base, */
+kernel/hd.c: /* 		       hdi->logical[i].size, */
+kernel/hd.c: /* 		       hdi->logical[i].size); */
+kernel/hd.c: 	out_byte(REG_FEATURES, cmd->features);
+kernel/hd.c: 	out_byte(REG_NSECTOR,  cmd->count);
+kernel/hd.c: 	out_byte(REG_LBA_LOW,  cmd->lba_low);
+kernel/hd.c: 	out_byte(REG_LBA_MID,  cmd->lba_mid);
+kernel/hd.c: 	out_byte(REG_LBA_HIGH, cmd->lba_high);
+kernel/hd.c: 	out_byte(REG_DEVICE,   cmd->device);
+kernel/hd.c: 	out_byte(REG_CMD,     cmd->command);
+kernel/hd.c: 	while(((get_ticks() - t) * 1000 / HZ) < timeout)
+kernel/hd.c: 	 *   - reads the Status Register,
+kernel/hd.c: 	 *   - issues a reset, or
+kernel/hd.c: 	 *   - writes to the Command Register.
+kernel/kernel.asm:  -- 
+kernel/kernel.asm: ; ---------------------------------
+kernel/kernel.asm: ; ---------------------------------
+kernel/kernel.asm: 	or	al, (1 << (%1 - 8))	;  | 
+kernel/kernel.asm: 	and	al, ~(1 << (%1 - 8))	;  | 
+kernel/kernel.asm: ; ---------------------------------
+kernel/kernel.asm:  -- 
+kernel/kernel.asm:         mov     esp, StackTop               ;  mov esp, StackTop <--
+kernel/kernel.asm:         jmp     [esi + RETADR - P_STACKBASE];  return;
+kernel/kernel.asm:         jmp     [esi + RETADR - P_STACKBASE];  return;
+kernel/kernel.asm:         mov     [esi + EAXREG - P_STACKBASE], eax
+kernel/keyboard.c: 	 * This var points to a row in keymap[]. I don't use two-dimension
+kernel/keyboard.c: 				switch(key) {	/* '/', '*', '-', '+',
+kernel/keyboard.c: 					key = '-';
+kernel/keyboard.c: 							key = key - PAD_0 + '0';
+kernel/keyboard.c: 	kb_in.count--;
+kernel/kliba.asm: 	mul	bl			; ax <- row * 80
+kernel/kliba.asm: .glitter_str:	db	'-\|/'
+kernel/kliba.asm: .strlen		equ	$ - .glitter_str
+kernel/klib.c: 	pbp->mem_size = p[BI_MEM_SIZE];
+kernel/klib.c: 	pbp->kernel_file = (unsigned char *)(p[BI_KERNEL_FILE]);
+kernel/klib.c: 	assert(memcmp(pbp->kernel_file, ELFMAG, SELFMAG) == 0);
+kernel/klib.c:  * - The meaning of `base':	base => first_valid_byte
+kernel/klib.c:  * - The meaning of `limit':	base + limit => last_valid_byte
+kernel/klib.c: 	if (memcmp(elf_header->e_ident, ELFMAG, SELFMAG) != 0)
+kernel/klib.c: 		return -1;
+kernel/klib.c: 	for (i = 0; i < elf_header->e_shnum; i++) {
+kernel/klib.c: 				      elf_header->e_shoff +
+kernel/klib.c: 				      i * elf_header->e_shentsize);
+kernel/klib.c: 		if (section_header->sh_flags & SHF_ALLOC) {
+kernel/klib.c: 			int bottom = section_header->sh_addr;
+kernel/klib.c: 			int top = section_header->sh_addr +
+kernel/klib.c: 				section_header->sh_size;
+kernel/klib.c: 	*l = t - *b - 1;
+kernel/klib.c: 		for(i=28;i>=0;i-=4){
+kernel/main.c: 			p->p_flags = FREE_SLOT;
+kernel/main.c:                         t	= user_proc_table + (i - NR_TASKS);
+kernel/main.c: 		strcpy(p->name, t->name);	/* name of the process */
+kernel/main.c: 		p->p_parent = NO_TASK;
+kernel/main.c: 		if (strcmp(t->name, "INIT") != 0) {
+kernel/main.c: 			p->ldts[INDEX_LDT_C]  = gdt[SELECTOR_KERNEL_CS >> 3];
+kernel/main.c: 			p->ldts[INDEX_LDT_RW] = gdt[SELECTOR_KERNEL_DS >> 3];
+kernel/main.c: 			p->ldts[INDEX_LDT_C].attr1  = DA_C   | priv << 5;
+kernel/main.c: 			p->ldts[INDEX_LDT_RW].attr1 = DA_DRW | priv << 5;
+kernel/main.c: 			init_desc(&p->ldts[INDEX_LDT_C],
+kernel/main.c: 			init_desc(&p->ldts[INDEX_LDT_RW],
+kernel/main.c: 		p->regs.cs = INDEX_LDT_C << 3 |	SA_TIL | rpl;
+kernel/main.c: 		p->regs.ds =
+kernel/main.c: 			p->regs.es =
+kernel/main.c: 			p->regs.fs =
+kernel/main.c: 			p->regs.ss = INDEX_LDT_RW << 3 | SA_TIL | rpl;
+kernel/main.c: 		p->regs.gs = (SELECTOR_KERNEL_GS & SA_RPL_MASK) | rpl;
+kernel/main.c: 		p->regs.eip	= (u32)t->initial_eip;
+kernel/main.c: 		p->regs.esp	= (u32)stk;
+kernel/main.c: 		p->regs.eflags	= eflags;
+kernel/main.c: 		p->ticks = p->priority = prio;
+kernel/main.c: 		p->p_flags = 0;
+kernel/main.c: 		p->p_msg = 0;
+kernel/main.c: 		p->p_recvfrom = NO_TASK;
+kernel/main.c: 		p->p_sendto = NO_TASK;
+kernel/main.c: 		p->has_int_msg = 0;
+kernel/main.c: 		p->q_sending = 0;
+kernel/main.c: 		p->next_sending = 0;
+kernel/main.c: 			p->filp[j] = 0;
+kernel/main.c: 		stk -= t->stacksize;
+kernel/main.c: 	assert(fd != -1);
+kernel/main.c: 		char * p = phdr->size;
+kernel/main.c: 			f_len = (f_len * 8) + (*p++ - '0'); /* octal */
+kernel/main.c: 		int fdout = open(phdr->name, O_CREAT | O_RDWR | O_TRUNC);
+kernel/main.c: 		if (fdout == -1) {
+kernel/main.c: 			printf("    failed to extract file: %s\n", phdr->name);
+kernel/main.c: 		printf("    %s\n", phdr->name);
+kernel/main.c: 			     ((iobytes - 1) / SECTOR_SIZE + 1) * SECTOR_SIZE);
+kernel/main.c: 			bytes_left -= iobytes;
+kernel/main.c: 		if (fd == -1) {
+kernel/proc.c: 			if (p->p_flags == 0) {
+kernel/proc.c: 				if (p->ticks > greatest_ticks) {
+kernel/proc.c: 					greatest_ticks = p->ticks;
+kernel/proc.c: 				if (p->p_flags == 0)
+kernel/proc.c: 					p->ticks = p->priority;
+kernel/proc.c: 	mla->source = caller;
+kernel/proc.c: 	assert(mla->source != src_dest);
+kernel/proc.c: 	struct descriptor * d = &p->ldts[idx];
+kernel/proc.c: 	return d->base_high << 24 | d->base_mid << 16 | d->base_low;
+kernel/proc.c:  * <Ring 0~1> Virtual addr --> Linear addr.
+kernel/proc.c: 	assert(p->p_flags);
+kernel/proc.c: 	assert(p->p_flags == 0);
+kernel/proc.c:  * A -> B -> C -> A, then a deadlock occurs, because all of them will
+kernel/proc.c: 		if (p->p_flags & SENDING) {
+kernel/proc.c: 			if (p->p_sendto == src) {
+kernel/proc.c: 				printl("=_=%s", p->name);
+kernel/proc.c: 					assert(p->p_msg);
+kernel/proc.c: 					p = proc_table + p->p_sendto;
+kernel/proc.c: 					printl("->%s", p->name);
+kernel/proc.c: 			p = proc_table + p->p_sendto;
+kernel/proc.c: 		panic(">>DEADLOCK<< %s->%s", sender->name, p_dest->name);
+kernel/proc.c: 	if ((p_dest->p_flags & RECEIVING) && /* dest is waiting for the msg */
+kernel/proc.c: 	    (p_dest->p_recvfrom == proc2pid(sender) ||
+kernel/proc.c: 	     p_dest->p_recvfrom == ANY)) {
+kernel/proc.c: 		assert(p_dest->p_msg);
+kernel/proc.c: 		phys_copy(va2la(dest, p_dest->p_msg),
+kernel/proc.c: 		p_dest->p_msg = 0;
+kernel/proc.c: 		p_dest->p_flags &= ~RECEIVING; /* dest has received the msg */
+kernel/proc.c: 		p_dest->p_recvfrom = NO_TASK;
+kernel/proc.c: 		assert(p_dest->p_flags == 0);
+kernel/proc.c: 		assert(p_dest->p_msg == 0);
+kernel/proc.c: 		assert(p_dest->p_recvfrom == NO_TASK);
+kernel/proc.c: 		assert(p_dest->p_sendto == NO_TASK);
+kernel/proc.c: 		assert(sender->p_flags == 0);
+kernel/proc.c: 		assert(sender->p_msg == 0);
+kernel/proc.c: 		assert(sender->p_recvfrom == NO_TASK);
+kernel/proc.c: 		assert(sender->p_sendto == NO_TASK);
+kernel/proc.c: 		sender->p_flags |= SENDING;
+kernel/proc.c: 		assert(sender->p_flags == SENDING);
+kernel/proc.c: 		sender->p_sendto = dest;
+kernel/proc.c: 		sender->p_msg = m;
+kernel/proc.c: 		if (p_dest->q_sending) {
+kernel/proc.c: 			p = p_dest->q_sending;
+kernel/proc.c: 			while (p->next_sending)
+kernel/proc.c: 				p = p->next_sending;
+kernel/proc.c: 			p->next_sending = sender;
+kernel/proc.c: 			p_dest->q_sending = sender;
+kernel/proc.c: 		sender->next_sending = 0;
+kernel/proc.c: 		assert(sender->p_flags == SENDING);
+kernel/proc.c: 		assert(sender->p_msg != 0);
+kernel/proc.c: 		assert(sender->p_recvfrom == NO_TASK);
+kernel/proc.c: 		assert(sender->p_sendto == dest);
+kernel/proc.c: 	if ((p_who_wanna_recv->has_int_msg) &&
+kernel/proc.c: 		p_who_wanna_recv->has_int_msg = 0;
+kernel/proc.c: 		assert(p_who_wanna_recv->p_flags == 0);
+kernel/proc.c: 		assert(p_who_wanna_recv->p_msg == 0);
+kernel/proc.c: 		assert(p_who_wanna_recv->p_sendto == NO_TASK);
+kernel/proc.c: 		assert(p_who_wanna_recv->has_int_msg == 0);
+kernel/proc.c: 		if (p_who_wanna_recv->q_sending) {
+kernel/proc.c: 			p_from = p_who_wanna_recv->q_sending;
+kernel/proc.c: 			assert(p_who_wanna_recv->p_flags == 0);
+kernel/proc.c: 			assert(p_who_wanna_recv->p_msg == 0);
+kernel/proc.c: 			assert(p_who_wanna_recv->p_recvfrom == NO_TASK);
+kernel/proc.c: 			assert(p_who_wanna_recv->p_sendto == NO_TASK);
+kernel/proc.c: 			assert(p_who_wanna_recv->q_sending != 0);
+kernel/proc.c: 			assert(p_from->p_flags == SENDING);
+kernel/proc.c: 			assert(p_from->p_msg != 0);
+kernel/proc.c: 			assert(p_from->p_recvfrom == NO_TASK);
+kernel/proc.c: 			assert(p_from->p_sendto == proc2pid(p_who_wanna_recv));
+kernel/proc.c: 		if ((p_from->p_flags & SENDING) &&
+kernel/proc.c: 		    (p_from->p_sendto == proc2pid(p_who_wanna_recv))) {
+kernel/proc.c: 			struct proc* p = p_who_wanna_recv->q_sending;
+kernel/proc.c: 				assert(p_from->p_flags & SENDING);
+kernel/proc.c: 				p = p->next_sending;
+kernel/proc.c: 			assert(p_who_wanna_recv->p_flags == 0);
+kernel/proc.c: 			assert(p_who_wanna_recv->p_msg == 0);
+kernel/proc.c: 			assert(p_who_wanna_recv->p_recvfrom == NO_TASK);
+kernel/proc.c: 			assert(p_who_wanna_recv->p_sendto == NO_TASK);
+kernel/proc.c: 			assert(p_who_wanna_recv->q_sending != 0);
+kernel/proc.c: 			assert(p_from->p_flags == SENDING);
+kernel/proc.c: 			assert(p_from->p_msg != 0);
+kernel/proc.c: 			assert(p_from->p_recvfrom == NO_TASK);
+kernel/proc.c: 			assert(p_from->p_sendto == proc2pid(p_who_wanna_recv));
+kernel/proc.c: 		if (p_from == p_who_wanna_recv->q_sending) { /* the 1st one */
+kernel/proc.c: 			p_who_wanna_recv->q_sending = p_from->next_sending;
+kernel/proc.c: 			p_from->next_sending = 0;
+kernel/proc.c: 			prev->next_sending = p_from->next_sending;
+kernel/proc.c: 			p_from->next_sending = 0;
+kernel/proc.c: 		assert(p_from->p_msg);
+kernel/proc.c: 			  va2la(proc2pid(p_from), p_from->p_msg),
+kernel/proc.c: 		p_from->p_msg = 0;
+kernel/proc.c: 		p_from->p_sendto = NO_TASK;
+kernel/proc.c: 		p_from->p_flags &= ~SENDING;
+kernel/proc.c: 		p_who_wanna_recv->p_flags |= RECEIVING;
+kernel/proc.c: 		p_who_wanna_recv->p_msg = m;
+kernel/proc.c: 		p_who_wanna_recv->p_recvfrom = src;
+kernel/proc.c: 		assert(p_who_wanna_recv->p_flags == RECEIVING);
+kernel/proc.c: 		assert(p_who_wanna_recv->p_msg != 0);
+kernel/proc.c: 		assert(p_who_wanna_recv->p_recvfrom != NO_TASK);
+kernel/proc.c: 		assert(p_who_wanna_recv->p_sendto == NO_TASK);
+kernel/proc.c: 		assert(p_who_wanna_recv->has_int_msg == 0);
+kernel/proc.c: 	if ((p->p_flags & RECEIVING) && /* dest is waiting for the msg */
+kernel/proc.c: 	    ((p->p_recvfrom == INTERRUPT) || (p->p_recvfrom == ANY))) {
+kernel/proc.c: 		p->p_msg->source = INTERRUPT;
+kernel/proc.c: 		p->p_msg->type = HARD_INT;
+kernel/proc.c: 		p->p_msg = 0;
+kernel/proc.c: 		p->has_int_msg = 0;
+kernel/proc.c: 		p->p_flags &= ~RECEIVING; /* dest has received the msg */
+kernel/proc.c: 		p->p_recvfrom = NO_TASK;
+kernel/proc.c: 		assert(p->p_flags == 0);
+kernel/proc.c: 		assert(p->p_flags == 0);
+kernel/proc.c: 		assert(p->p_msg == 0);
+kernel/proc.c: 		assert(p->p_recvfrom == NO_TASK);
+kernel/proc.c: 		assert(p->p_sendto == NO_TASK);
+kernel/proc.c: 		p->has_int_msg = 1;
+kernel/proc.c: 	sprintf(info, "byte dump of proc_table[%d]:\n", p - proc_table); disp_color_str(info, text_color);
+kernel/proc.c: 	sprintf(info, "ldt_sel: 0x%x.  ", p->ldt_sel); disp_color_str(info, text_color);
+kernel/proc.c: 	sprintf(info, "ticks: 0x%x.  ", p->ticks); disp_color_str(info, text_color);
+kernel/proc.c: 	sprintf(info, "priority: 0x%x.  ", p->priority); disp_color_str(info, text_color);
+kernel/proc.c: 	/* sprintf(info, "pid: 0x%x.  ", p->pid); disp_color_str(info, text_color); */
+kernel/proc.c: 	sprintf(info, "name: %s.  ", p->name); disp_color_str(info, text_color);
+kernel/proc.c: 	sprintf(info, "p_flags: 0x%x.  ", p->p_flags); disp_color_str(info, text_color);
+kernel/proc.c: 	sprintf(info, "p_recvfrom: 0x%x.  ", p->p_recvfrom); disp_color_str(info, text_color);
+kernel/proc.c: 	sprintf(info, "p_sendto: 0x%x.  ", p->p_sendto); disp_color_str(info, text_color);
+kernel/proc.c: 	/* sprintf(info, "nr_tty: 0x%x.  ", p->nr_tty); disp_color_str(info, text_color); */
+kernel/proc.c: 	sprintf(info, "has_int_msg: 0x%x.  ", p->has_int_msg); disp_color_str(info, text_color);
+kernel/proc.c: 	       proc_table[m->source].name,
+kernel/proc.c: 	       m->source,
+kernel/proc.c: 	       m->type,
+kernel/proc.c: 	       m->u.m3.m3i1,
+kernel/proc.c: 	       m->u.m3.m3i2,
+kernel/proc.c: 	       m->u.m3.m3i3,
+kernel/proc.c: 	       m->u.m3.m3i4,
+kernel/proc.c: 	       (int)m->u.m3.m3p1,
+kernel/proc.c: 	       (int)m->u.m3.m3p2,
+kernel/protect.c:  *----------------------------------------------------------------------*
+kernel/protect.c: 		  sizeof(tss) - 1,
+kernel/protect.c: 			  LDT_SIZE * sizeof(struct descriptor) - 1,
+kernel/protect.c:  *----------------------------------------------------------------------*
+kernel/protect.c: 	p_gate->offset_low	= base & 0xFFFF;
+kernel/protect.c: 	p_gate->selector	= SELECTOR_KERNEL_CS;
+kernel/protect.c: 	p_gate->dcount		= 0;
+kernel/protect.c: 	p_gate->attr		= desc_type | (privilege << 5);
+kernel/protect.c: 	p_gate->offset_high	= (base >> 16) & 0xFFFF;
+kernel/protect.c:  *----------------------------------------------------------------------*
+kernel/protect.c: 	return (p_dest->base_high << 24) | (p_dest->base_mid << 16) | (p_dest->base_low);
+kernel/protect.c:  *----------------------------------------------------------------------*
+kernel/protect.c: 	p_desc->limit_low	= limit & 0x0FFFF;		/* 
+kernel/protect.c: 	p_desc->base_low	= base & 0x0FFFF;		/* 
+kernel/protect.c: 	p_desc->base_mid	= (base >> 16) & 0x0FF;		/* 
+kernel/protect.c: 	p_desc->attr1		= attribute & 0xFF;		/* 
+kernel/protect.c: 	p_desc->limit_high_attr2= ((limit >> 16) & 0x0F) |
+kernel/protect.c: 	p_desc->base_high	= (base >> 24) & 0x0FF;		/* 
+kernel/protect.c:  *----------------------------------------------------------------------*
+kernel/protect.c: 					"#SS Stack-Segment Fault",
+kernel/protect.c: 					"#MF x87 FPU Floating-Point Error (Math Fault)",
+kernel/protect.c: 					"#XF SIMD Floating-Point Exception"
+kernel/protect.c: 	disp_color_str("Exception! --> ", text_color);
+kernel/start.c: 	disp_str("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n-----\"cstart\" begins-----\n");
+kernel/start.c: 	*p_gdt_limit = GDT_SIZE * sizeof(struct descriptor) - 1;
+kernel/start.c: 	*p_idt_limit = IDT_SIZE * sizeof(struct gate) - 1;
+kernel/start.c: 	disp_str("-----\"cstart\" finished-----\n");
+kernel/systask.c: 	t->year = read_register(YEAR);
+kernel/systask.c: 	t->month = read_register(MONTH);
+kernel/systask.c: 	t->day = read_register(DAY);
+kernel/systask.c: 	t->hour = read_register(HOUR);
+kernel/systask.c: 	t->minute = read_register(MINUTE);
+kernel/systask.c: 	t->second = read_register(SECOND);
+kernel/systask.c: 		t->year = BCD_TO_DEC(t->year);
+kernel/systask.c: 		t->month = BCD_TO_DEC(t->month);
+kernel/systask.c: 		t->day = BCD_TO_DEC(t->day);
+kernel/systask.c: 		t->hour = BCD_TO_DEC(t->hour);
+kernel/systask.c: 		t->minute = BCD_TO_DEC(t->minute);
+kernel/systask.c: 		t->second = BCD_TO_DEC(t->second);
+kernel/systask.c: 	t->year += 2000;
+kernel/tty.c:  *   - DEV_OPEN
+kernel/tty.c:  *   - DEV_READ
+kernel/tty.c:  *   - DEV_WRITE
+kernel/tty.c:  *   - MESSAGE from clock_handler(): HARD_INT
+kernel/tty.c:  *      - Every time clock interrupt occurs, the clock handler will check whether
+kernel/tty.c:  *        TTY. It is a special message because it is not from a process -- clock
+kernel/tty.c:  *   - MESSAGE from a PROC: TTY_WRITE
+kernel/tty.c:  *      - TTY is a driver. In most cases MESSAGE is passed from a PROC to FS then
+kernel/tty.c:  *           - tty_dev_read() vs tty_do_read()
+kernel/tty.c:  *             - tty_dev_read() reads chars from keyboard buffer
+kernel/tty.c:  *             - tty_do_read() handles DEV_READ message
+kernel/tty.c:  *           - tty_dev_write() vs tty_do_write() vs tty_write()
+kernel/tty.c:  *             - tty_dev_write() returns chars to a process waiting for input
+kernel/tty.c:  *             - tty_do_write() handles DEV_WRITE message
+kernel/tty.c:  *             - tty_write() handles TTY_WRITE message
+kernel/tty.c: 			} while (tty->ibuf_cnt);
+kernel/tty.c: 			 * waked up by clock_handler -- a key was just pressed
+kernel/tty.c:  *   -# the input buffer
+kernel/tty.c:  *   -# the corresponding console
+kernel/tty.c: 	tty->ibuf_cnt = 0;
+kernel/tty.c: 	tty->ibuf_head = tty->ibuf_tail = tty->ibuf;
+kernel/tty.c: 	tty->tty_caller = NO_TASK;
+kernel/tty.c: 	tty->tty_procnr = NO_TASK;
+kernel/tty.c: 	tty->tty_req_buf = 0;
+kernel/tty.c: 	tty->tty_left_cnt = 0;
+kernel/tty.c: 	tty->tty_trans_cnt = 0;
+kernel/tty.c: 				scroll_screen(tty->console, SCR_DN);
+kernel/tty.c: 				scroll_screen(tty->console, SCR_UP);
+kernel/tty.c: 				select_console(raw_code - F1);
+kernel/tty.c:  * Put a key into the in-buffer of TTY.
+kernel/tty.c: 	if (tty->ibuf_cnt < TTY_IN_BYTES) {
+kernel/tty.c: 		*(tty->ibuf_head) = key;
+kernel/tty.c: 		tty->ibuf_head++;
+kernel/tty.c: 		if (tty->ibuf_head == tty->ibuf + TTY_IN_BYTES)
+kernel/tty.c: 			tty->ibuf_head = tty->ibuf;
+kernel/tty.c: 		tty->ibuf_cnt++;
+kernel/tty.c: 	if (is_current_console(tty->console))
+kernel/tty.c: 	while (tty->ibuf_cnt) {
+kernel/tty.c: 		char ch = *(tty->ibuf_tail);
+kernel/tty.c: 		tty->ibuf_tail++;
+kernel/tty.c: 		if (tty->ibuf_tail == tty->ibuf + TTY_IN_BYTES)
+kernel/tty.c: 			tty->ibuf_tail = tty->ibuf;
+kernel/tty.c: 		tty->ibuf_cnt--;
+kernel/tty.c: 		if (tty->tty_left_cnt) {
+kernel/tty.c: 				out_char(tty->console, ch);
+kernel/tty.c: 				assert(tty->tty_req_buf);
+kernel/tty.c: 				void * p = tty->tty_req_buf +
+kernel/tty.c: 					   tty->tty_trans_cnt;
+kernel/tty.c: 				tty->tty_trans_cnt++;
+kernel/tty.c: 				tty->tty_left_cnt--;
+kernel/tty.c: 			else if (ch == '\b' && tty->tty_trans_cnt) {
+kernel/tty.c: 				out_char(tty->console, ch);
+kernel/tty.c: 				tty->tty_trans_cnt--;
+kernel/tty.c: 				tty->tty_left_cnt++;
+kernel/tty.c: 			if (ch == '\n' || tty->tty_left_cnt == 0) {
+kernel/tty.c: 				out_char(tty->console, '\n');
+kernel/tty.c: 				assert(tty->tty_procnr != NO_TASK);
+kernel/tty.c: 				msg.PROC_NR = tty->tty_procnr;
+kernel/tty.c: 				msg.CNT = tty->tty_trans_cnt;
+kernel/tty.c: 				send_recv(SEND, tty->tty_caller, &msg);
+kernel/tty.c: 				tty->tty_left_cnt = 0;
+kernel/tty.c:  * transfer (tty buffer -> proc buffer) is not done here.
+kernel/tty.c: 	tty->tty_caller   = msg->source;  /* who called, usually FS */
+kernel/tty.c: 	tty->tty_procnr   = msg->PROC_NR; /* who wants the chars */
+kernel/tty.c: 	tty->tty_req_buf  = va2la(tty->tty_procnr,
+kernel/tty.c: 				  msg->BUF);/* where the chars should be put */
+kernel/tty.c: 	tty->tty_left_cnt = msg->CNT; /* how many chars are requested */
+kernel/tty.c: 	tty->tty_trans_cnt= 0; /* how many chars have been transferred */
+kernel/tty.c: 	msg->type = SUSPEND_PROC;
+kernel/tty.c: 	send_recv(SEND, tty->tty_caller, msg);
+kernel/tty.c: 	char * p = (char*)va2la(msg->PROC_NR, msg->BUF);
+kernel/tty.c: 	int i = msg->CNT;
+kernel/tty.c: 			out_char(tty->console, buf[j]);
+kernel/tty.c: 		i -= bytes;
+kernel/tty.c: 	msg->type = SYSCALL_RET;
+kernel/tty.c: 	send_recv(SEND, msg->source, msg);
+kernel/tty.c:  * @note `printx' accepts only one parameter -- `char* s', the other one --
+kernel/tty.c:  * `struct proc * proc' -- is pushed by kernel.asm::sys_call so that the
+kernel/tty.c: 	 * If this happens in Ring 0, no linear-physical address mapping
+kernel/tty.c: 	 *   -# printx() is called in Ring 0
+kernel/tty.c: 	 *      - k_reenter > 0. When code in Ring 0 calls printx(),
+kernel/tty.c: 	 *        an `interrupt re-enter' will occur (printx() generates
+kernel/tty.c: 	 *   -# printx() is called in Ring 1~3
+kernel/tty.c: 	 *      - k_reenter == 0.
+kernel/tty.c: 				while (((int)v - V_MEM_BASE) % (SCR_WIDTH * 16)) {
+kernel/tty.c: 		/* 	out_char(ptty->console, ch); /\* output chars to all TTYs *\/ */
+kernel/tty.c: 		out_char(TTY_FIRST->console, ch);
+kernel/tty.c: 	static char sep[] = "--------------------------------\n";
+kernel/tty.c: 	printl("head: %d\n", tty->ibuf_head - tty->ibuf);
+kernel/tty.c: 	printl("tail: %d\n", tty->ibuf_tail - tty->ibuf);
+kernel/tty.c: 	printl("cnt: %d\n", tty->ibuf_cnt);
+kernel/tty.c: 	int pid = tty->tty_caller;
+kernel/tty.c: 	pid = tty->tty_procnr;
+kernel/tty.c: 	printl("req_buf: %d\n", (int)tty->tty_req_buf);
+kernel/tty.c: 	printl("left_cnt: %d\n", tty->tty_left_cnt);
+kernel/tty.c: 	printl("trans_cnt: %d\n", tty->tty_trans_cnt);
+kernel/tty.c: 	printl("--------------------------------\n");
+lib/close.c:  * @return Zero if successful, otherwise -1.
+lib/exec.c:  * @return  Zero if successful, otherwise -1.
+lib/fork.c:  *           On failure, a -1 will be returned in the parent's context, no
+lib/misc.c: 		return (s1 - s2);
+lib/misc.c: 			return (*p1 - *p2);
+lib/misc.c: 		return (s1 - s2);
+lib/misc.c: 	return (*p1 - *p2);
+lib/open.c:  * @return File descriptor if successful, otherwise -1.
+lib/orangescrt.a: GCC: (Ubuntu 4.8.4-2ubuntu1~14.04.4) 4.8.4
+lib/orangescrt.a: .note.GNU-stack
+lib/orangescrt.a: GCC: (Ubuntu 4.8.4-2ubuntu1~14.04.4) 4.8.4
+lib/orangescrt.a: .note.GNU-stack
+lib/orangescrt.a: GCC: (Ubuntu 4.8.4-2ubuntu1~14.04.4) 4.8.4
+lib/orangescrt.a: .note.GNU-stack
+lib/orangescrt.a: GCC: (Ubuntu 4.8.4-2ubuntu1~14.04.4) 4.8.4
+lib/orangescrt.a: .note.GNU-stack
+lib/orangescrt.a: GCC: (Ubuntu 4.8.4-2ubuntu1~14.04.4) 4.8.4
+lib/orangescrt.a: .note.GNU-stack
+lib/orangescrt.a: GCC: (Ubuntu 4.8.4-2ubuntu1~14.04.4) 4.8.4
+lib/orangescrt.a: .note.GNU-stack
+lib/orangescrt.a: GCC: (Ubuntu 4.8.4-2ubuntu1~14.04.4) 4.8.4
+lib/orangescrt.a: .note.GNU-stack
+lib/orangescrt.a: GCC: (Ubuntu 4.8.4-2ubuntu1~14.04.4) 4.8.4
+lib/orangescrt.a: .note.GNU-stack
+lib/orangescrt.a: GCC: (Ubuntu 4.8.4-2ubuntu1~14.04.4) 4.8.4
+lib/orangescrt.a: .note.GNU-stack
+lib/orangescrt.a: GCC: (Ubuntu 4.8.4-2ubuntu1~14.04.4) 4.8.4
+lib/orangescrt.a: .note.GNU-stack
+lib/orangescrt.a: GCC: (Ubuntu 4.8.4-2ubuntu1~14.04.4) 4.8.4
+lib/orangescrt.a: .note.GNU-stack
+lib/orangescrt.a: GCC: (Ubuntu 4.8.4-2ubuntu1~14.04.4) 4.8.4
+lib/orangescrt.a: .note.GNU-stack
+lib/orangescrt.a: GCC: (Ubuntu 4.8.4-2ubuntu1~14.04.4) 4.8.4
+lib/orangescrt.a: .note.GNU-stack
+lib/orangescrt.a: GCC: (Ubuntu 4.8.4-2ubuntu1~14.04.4) 4.8.4
+lib/orangescrt.a: .note.GNU-stack
+lib/orangescrt.a: GCC: (Ubuntu 4.8.4-2ubuntu1~14.04.4) 4.8.4
+lib/orangescrt.a: .note.GNU-stack
+lib/read.c:  *          On error, -1 is returned.
+lib/stat.c:  * @return  On success, zero is returned. On error, -1 is returned.
+lib/string.asm: ; ------------------------------------------------------------------------
+lib/string.asm: ; ------------------------------------------------------------------------
+lib/string.asm: -------------------------------------------------------------
+lib/string.asm: ; ------------------------------------------------------------------------
+lib/string.asm: ; ------------------------------------------------------------------------
+lib/string.asm: ; ------------------------------------------------------------------------
+lib/string.asm: ; ------------------------------------------------------------------------
+lib/string.asm: ; ------------------------------------------------------------------------
+lib/string.asm: -------------------------------------------------------------
+lib/string.asm: ; ------------------------------------------------------------------------
+lib/string.asm: ; ------------------------------------------------------------------------
+lib/string.asm: ; ------------------------------------------------------------------------
+lib/unlink.c:  * @return Zero if successful, otherwise -1.
+lib/vsprintf.c: 	*(*ps)++ = (m < 10) ? (m + '0') : (m - 10 + 'A');
+lib/vsprintf.c: 			align_nr += *fmt - '0';
+lib/vsprintf.c: 				m = m * (-1);
+lib/vsprintf.c: 				*q++ = '-';
+lib/vsprintf.c: 		for (k = 0; k < ((align_nr > strlen(inner_buf)) ? (align_nr - strlen(inner_buf)) : 0); k++) {
+lib/vsprintf.c: 	return (p - buf);
+lib/wait.c: 	return (msg.PID == NO_TASK ? -1 : msg.PID);
+lib/write.c:  *          On error, -1 is returned.
+mm/exec.c:  * @return  Zero if successful, otherwise -1.
+mm/exec.c: 		return -1;
+mm/exec.c: 	if (fd == -1)
+mm/exec.c: 		return -1;
+mm/exec.c: 	for (i = 0; i < elf_hdr->e_phnum; i++) {
+mm/exec.c: 		Elf32_Phdr* prog_hdr = (Elf32_Phdr*)(mmbuf + elf_hdr->e_phoff +
+mm/exec.c: 			 			(i * elf_hdr->e_phentsize));
+mm/exec.c: 		if (prog_hdr->p_type == PT_LOAD) {
+mm/exec.c: 			assert(prog_hdr->p_vaddr + prog_hdr->p_memsz <
+mm/exec.c: 			phys_copy((void*)va2la(src, (void*)prog_hdr->p_vaddr),
+mm/exec.c: 						 mmbuf + prog_hdr->p_offset),
+mm/exec.c: 				  prog_hdr->p_filesz);
+mm/exec.c: 	u8 * orig_stack = (u8*)(PROC_IMAGE_SIZE_DEFAULT - PROC_ORIGIN_STACK);
+mm/exec.c: 	int delta = (int)orig_stack - (int)mm_msg.BUF;
+mm/exec.c: 	proc_table[src].regs.eip = elf_hdr->e_entry; /* @see _start.asm */
+mm/exec.c: 	proc_table[src].regs.esp = PROC_IMAGE_SIZE_DEFAULT - PROC_ORIGIN_STACK;
+mm/forkexit.c:  * @return  Zero if success, otherwise -1.
+mm/forkexit.c: 		if (p->p_flags == FREE_SLOT)
+mm/forkexit.c: 		return -1;
+mm/forkexit.c: 	u16 child_ldt_sel = p->ldt_sel;
+mm/forkexit.c: 	p->ldt_sel = child_ldt_sel;
+mm/forkexit.c: 	p->p_parent = pid;
+mm/forkexit.c: 	sprintf(p->name, "%s_%d", proc_table[pid].name, child_pid);
+mm/forkexit.c: 	/* base of T-seg, in bytes */
+mm/forkexit.c: 	int caller_T_base  = reassembly(ppd->base_high, 24,
+mm/forkexit.c: 					ppd->base_mid,  16,
+mm/forkexit.c: 					ppd->base_low);
+mm/forkexit.c: 	/* limit of T-seg, in 1 or 4096 bytes,
+mm/forkexit.c: 					(ppd->limit_high_attr2 & 0xF), 16,
+mm/forkexit.c: 					ppd->limit_low);
+mm/forkexit.c: 	/* size of T-seg, in bytes */
+mm/forkexit.c: 			      ((ppd->limit_high_attr2 & (DA_LIMIT_4K >> 8)) ?
+mm/forkexit.c: 	/* base of D&S-seg, in bytes */
+mm/forkexit.c: 	int caller_D_S_base  = reassembly(ppd->base_high, 24,
+mm/forkexit.c: 					  ppd->base_mid,  16,
+mm/forkexit.c: 					  ppd->base_low);
+mm/forkexit.c: 	/* limit of D&S-seg, in 1 or 4096 bytes,
+mm/forkexit.c: 	int caller_D_S_limit = reassembly((ppd->limit_high_attr2 & 0xF), 16,
+mm/forkexit.c: 					  ppd->limit_low);
+mm/forkexit.c: 	/* size of D&S-seg, in bytes */
+mm/forkexit.c: 				((ppd->limit_high_attr2 & (DA_LIMIT_4K >> 8)) ?
+mm/forkexit.c: 	init_desc(&p->ldts[INDEX_LDT_C],
+mm/forkexit.c: 		  (PROC_IMAGE_SIZE_DEFAULT - 1) >> LIMIT_4K_SHIFT,
+mm/forkexit.c: 	init_desc(&p->ldts[INDEX_LDT_RW],
+mm/forkexit.c: 		  (PROC_IMAGE_SIZE_DEFAULT - 1) >> LIMIT_4K_SHIFT,
+mm/forkexit.c:  *     <1> inform FS so that the fd-related things will be cleaned up
+mm/forkexit.c:  *                 - clean P's WAITING bit, and
+mm/forkexit.c:  *                 - send P a message to unblock it
+mm/forkexit.c:  *                 - release A's proc_table[] slot
+mm/forkexit.c:  *                 - set A's HANGING bit
+mm/forkexit.c:  *                 - clean INIT's WAITING bit, and
+mm/forkexit.c:  *                 - send INIT a message to unblock it
+mm/forkexit.c:  *                 - release B's proc_table[] slot
+mm/forkexit.c:  *                     - B will call exit()
+mm/forkexit.c:  *                     - INIT will call wait()
+mm/forkexit.c:  *     - HANGING: everything except the proc_table entry has been cleaned up.
+mm/forkexit.c:  *     - WAITING: a proc has at least one child, and it is waiting for the
+mm/forkexit.c:  *     - zombie: say P has a child A, A will become a zombie if
+mm/forkexit.c:  *         - A exit(), and
+mm/forkexit.c:  *         - P does not wait(), neither does it exit(). that is to say, P just
+mm/forkexit.c: 	p->exit_status = status;
+mm/forkexit.c:  *     - Send proc's parent a message to unblock it, and
+mm/forkexit.c:  *     - release proc's proc_table[] entry
+mm/forkexit.c: 	msg2parent.STATUS = proc->exit_status;
+mm/forkexit.c: 	send_recv(SEND, proc->p_parent, &msg2parent);
+mm/forkexit.c: 	proc->p_flags = FREE_SLOT;
+mm/forkexit.c:  *           - reply to P (cleanup() will send P a messageto unblock it)
+mm/forkexit.c:  *           - release A's proc_table[] entry
+mm/forkexit.c:  *           - return (MM will go on with the next message loop)
+mm/forkexit.c:  *           - set P's WAITING bit
+mm/forkexit.c:  *           - reply to P with error
+mm/forkexit.c: 		if (p_proc->p_parent == pid) {
+mm/forkexit.c: 			if (p_proc->p_flags & HANGING) {
+mm/main.c: 		(pid - (NR_TASKS + NR_NATIVE_PROCS)) * PROC_IMAGE_SIZE_DEFAULT;
+scripts/genlog: echo "--------"
+scripts/genlog: dd if=80m.img of=$syslog_file bs=1 count=`head -n 1 $syslog_tmp_file | sed 's/\ //g'` skip=`echo "obase=10;ibase=16;1C88000" | bc` 2> /dev/null
+scripts/genlog: echo "time: "`cat $syslog_file | head -n 3 | tail -n 1`
+scripts/splitgraphs:     kw=`echo $line | awk -F "[ ]" '{print $1}'`
+scripts/splitgraphs: 	gname=`echo $line | awk -F "[ ]" '{print $2}'`
+scripts/splitgraphs: 	    if [ "$line" == "--separator--" ]; then
+scripts/splitgraphs: 		dot -Tpng $fname -o $pname
