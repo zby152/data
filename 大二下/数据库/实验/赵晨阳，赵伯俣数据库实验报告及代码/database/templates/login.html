@@ -1,0 +1,28 @@
+<!doctype html>
+<html>
+  <head>
+    <title>Login</title>
+    <meta charset="utf-8">
+  </head>
+  <body>
+    <h1>登录</h1>
+    <form method="post">
+      <p>
+        <label for="username">用户名:</label>
+        <input type="text" name="username" id="username" required>
+      </p>
+      <p>
+        <label for="password">密码:</label>
+        <input type="password" name="password" id="password" required>
+      </p>
+      <p>
+        <label for="user_type">登录类型:</label>
+        <select name="user_type" id="user_type" required>
+          <option value="admin">教师</option>
+          <option value="user">学生</option>
+        </select>
+      </p>
+      <button type="submit">登录</button>
+    </form>
+  </body>
+</html>

@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>录入学生信息</title>
+    <style>
+        body{
+            margin: 0;
+            padding: 0;
+            border: 0;
+        }
+
+        #background{
+            margin: 0;
+            padding: 0;
+            border: 0;
+           vertical-align: baseline;
+            height:800px;
+            background-attachment: fixed;
+            background-size: cover;
+            background-image:url("../static/1.jpg");
+        }
+
+        #dl{
+            width:200px;
+            height:350px;
+            background-color:rgba(0, 0, 0,.7);
+            position: absolute;
+            top:0;
+            bottom:0;
+            left:0;
+            right: 0;
+            margin:auto;
+            border-radius: 10%;
+            box-shadow:10px 10px 1px rgba(97, 91, 100, 0.5);
+        }
+
+        .text{
+            color:white;
+            display: flex;
+            justify-content: center;
+            font-style: inherit;
+        }
+
+        .input{
+            height:10%;
+            width:60%;
+        }
+
+        .but{
+            display: flex;
+            justify-content: center;
+        }
+    </style>
+</head>
+<body>
+    <form method="post">
+        <div id="background" >
+            <div id="dl">
+                <div class="text">学生信息录入</div>
+                <br>
+                <div class="text">学号：<input class="input"  type="text" name="sno"></input></div>
+                <br>
+               <div class="text">姓名：<input class="input"  type="text" name="sname"></input></div>
+                <br>
+               <div class="text">性别：<input class="input"  type="text" name="ssex"></input></div>
+                <br>
+                <div class="text">年龄：<input class="input"  type="text" name="sage"></input></div>
+                <br>
+                <div class="text">系：<input class="input"  type="text" name="sdept"></input></div>
+                <br>
+                <div class="text">班级：<input class="input"  type="text" name="sclass"></input></div>
+                <br>
+              <div class="but"><a href="success.html"><button type="submit" >提交</button></a></div>
+            </div>
+        </div>
+    </form>>
+</body>
+</html>
