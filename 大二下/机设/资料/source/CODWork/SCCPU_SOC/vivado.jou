@@ -1,0 +1,83 @@
+#-----------------------------------------------------------
+# Vivado v2017.4 (64-bit)
+# SW Build 2086221 on Fri Dec 15 20:55:39 MST 2017
+# IP Build 2085800 on Fri Dec 15 22:25:07 MST 2017
+# Start of session at: Fri Mar 17 08:58:22 2023
+# Process ID: 9704
+# Current directory: D:/CODWork/SCCPU_SOC
+# Command line: vivado.exe -gui_launcher_event rodinguilauncherevent10192 D:\CODWork\SCCPU_SOC\SCCPU_SOC.xpr
+# Log file: D:/CODWork/SCCPU_SOC/vivado.log
+# Journal file: D:/CODWork/SCCPU_SOC\vivado.jou
+#-----------------------------------------------------------
+start_gui
+open_project D:/CODWork/SCCPU_SOC/SCCPU_SOC.xpr
+update_compile_order -fileset sources_1
+report_ip_status -name ip_status 
+close_project
+create_project project_1 D:/galgame/project_1 -part xc7a100tcsg324-1
+import_files -norecurse {E:/models/SCCPU_Code/PC.v E:/models/SCCPU_Code/NPC.v E:/models/SCCPU_Code/alu.v E:/models/SCCPU_FPGATop/dm.v E:/models/SCCPU_FPGATop/Multi_CH32.v E:/models/SCCPU_FPGATop/MIO_BUS.v E:/models/SCCPU_Code/RF.v E:/models/SCCPU_Code/ctrl.v E:/models/SCCPU_Code/ctrl_encode_def.v E:/models/SCCPU_FPGATop/SCCPU_Top.v E:/models/SCCPU_FPGATop/clk_div.v E:/models/SCCPU_FPGATop/seg7x16.v E:/models/SCCPU_Code/mux.v E:/models/SCCPU_Code/EXT.v E:/models/SCCPU_Code/sccpu.v}
+update_compile_order -fileset sources_1
+update_compile_order -fileset sources_1
+create_ip -name dist_mem_gen -vendor xilinx.com -library ip -version 8.0 -module_name imem -dir d:/galgame/project_1/project_1.srcs/sources_1/ip
+set_property -dict [list CONFIG.depth {128} CONFIG.data_width {32} CONFIG.Component_Name {imem} CONFIG.memory_type {rom}] [get_ips imem]
+generate_target {instantiation_template} [get_files d:/galgame/project_1/project_1.srcs/sources_1/ip/imem/imem.xci]
+update_compile_order -fileset sources_1
+set_property -dict [list CONFIG.coefficient_file {E:/BaiduNetdiskDownload/source/Testing Code/mipstestloopjal_fpga.coe}] [get_ips imem]
+generate_target all [get_files  d:/galgame/project_1/project_1.srcs/sources_1/ip/imem/imem.xci]
+catch { config_ip_cache -export [get_ips -all imem] }
+export_ip_user_files -of_objects [get_files d:/galgame/project_1/project_1.srcs/sources_1/ip/imem/imem.xci] -no_script -sync -force -quiet
+create_ip_run [get_files -of_objects [get_fileset sources_1] d:/galgame/project_1/project_1.srcs/sources_1/ip/imem/imem.xci]
+launch_runs -jobs 4 imem_synth_1
+export_simulation -of_objects [get_files d:/galgame/project_1/project_1.srcs/sources_1/ip/imem/imem.xci] -directory D:/galgame/project_1/project_1.ip_user_files/sim_scripts -ip_user_files_dir D:/galgame/project_1/project_1.ip_user_files -ipstatic_source_dir D:/galgame/project_1/project_1.ip_user_files/ipstatic -lib_map_path [list {modelsim=D:/galgame/project_1/project_1.cache/compile_simlib/modelsim} {questa=D:/galgame/project_1/project_1.cache/compile_simlib/questa} {riviera=D:/galgame/project_1/project_1.cache/compile_simlib/riviera} {activehdl=D:/galgame/project_1/project_1.cache/compile_simlib/activehdl}] -use_ip_compiled_libs -force -quiet
+add_files -fileset constrs_1 -norecurse E:/BaiduNetdiskDownload/source/Nexys4DDR_CPU.xdc
+import_files -fileset constrs_1 E:/BaiduNetdiskDownload/source/Nexys4DDR_CPU.xdc
+launch_runs synth_1 -jobs 4
+wait_on_run synth_1
+launch_runs impl_1 -jobs 4
+wait_on_run impl_1
+open_run impl_1
+launch_runs impl_1 -to_step write_bitstream -jobs 4
+wait_on_run impl_1
+open_hw
+close_hw
+close_project
+create_project project_2 D:/galgame/project_2 -part xc7a100tcsg324-1
+import_files -norecurse {E:/models/SCCPU/SCCPU_Code/sccpu.v E:/models/SCCPU/SCCPU_FPGATop/dm.v E:/models/SCCPU/SCCPU_Code/mux.v E:/models/SCCPU/SCCPU_Code/PC.v E:/models/SCCPU/SCCPU_Code/RF.v E:/models/SCCPU/SCCPU_Code/ctrl_encode_def.v E:/models/SCCPU/SCCPU_FPGATop/clk_div.v E:/models/SCCPU/SCCPU_Code/NPC.v E:/models/SCCPU/SCCPU_Code/alu.v E:/models/SCCPU/SCCPU_Code/EXT.v E:/models/SCCPU/SCCPU_Code/ctrl.v E:/models/SCCPU/SCCPU_FPGATop/Multi_CH32.v E:/models/SCCPU/SCCPU_FPGATop/MIO_BUS.v E:/models/SCCPU/SCCPU_FPGATop/seg7x16.v E:/models/SCCPU/SCCPU_FPGATop/SCCPU_Top.v}
+update_compile_order -fileset sources_1
+update_compile_order -fileset sources_1
+create_ip -name dist_mem_gen -vendor xilinx.com -library ip -version 8.0 -module_name imem -dir d:/galgame/project_2/project_2.srcs/sources_1/ip
+set_property -dict [list CONFIG.depth {128} CONFIG.data_width {32} CONFIG.Component_Name {imem} CONFIG.memory_type {rom} CONFIG.coefficient_file {E:/BaiduNetdiskDownload/source/SCCPU/studentnosorting.coe}] [get_ips imem]
+generate_target {instantiation_template} [get_files d:/galgame/project_2/project_2.srcs/sources_1/ip/imem/imem.xci]
+generate_target all [get_files  d:/galgame/project_2/project_2.srcs/sources_1/ip/imem/imem.xci]
+catch { config_ip_cache -export [get_ips -all imem] }
+export_ip_user_files -of_objects [get_files d:/galgame/project_2/project_2.srcs/sources_1/ip/imem/imem.xci] -no_script -sync -force -quiet
+create_ip_run [get_files -of_objects [get_fileset sources_1] d:/galgame/project_2/project_2.srcs/sources_1/ip/imem/imem.xci]
+launch_runs -jobs 4 imem_synth_1
+export_simulation -of_objects [get_files d:/galgame/project_2/project_2.srcs/sources_1/ip/imem/imem.xci] -directory D:/galgame/project_2/project_2.ip_user_files/sim_scripts -ip_user_files_dir D:/galgame/project_2/project_2.ip_user_files -ipstatic_source_dir D:/galgame/project_2/project_2.ip_user_files/ipstatic -lib_map_path [list {modelsim=D:/galgame/project_2/project_2.cache/compile_simlib/modelsim} {questa=D:/galgame/project_2/project_2.cache/compile_simlib/questa} {riviera=D:/galgame/project_2/project_2.cache/compile_simlib/riviera} {activehdl=D:/galgame/project_2/project_2.cache/compile_simlib/activehdl}] -use_ip_compiled_libs -force -quiet
+add_files -fileset constrs_1 -norecurse E:/BaiduNetdiskDownload/source/Nexys4DDR_CPU.xdc
+import_files -fileset constrs_1 E:/BaiduNetdiskDownload/source/Nexys4DDR_CPU.xdc
+launch_runs synth_1 -jobs 4
+wait_on_run synth_1
+launch_runs impl_1 -jobs 4
+wait_on_run impl_1
+open_run synth_1 -name synth_1
+close_design
+open_run impl_1
+launch_runs impl_1 -to_step write_bitstream -jobs 4
+wait_on_run impl_1
+open_hw
+connect_hw_server
+open_hw_target
+set_property PROGRAM.FILE {D:/galgame/project_2/project_2.runs/impl_1/SCCPUSOC_Top.bit} [get_hw_devices xc7a100t_0]
+current_hw_device [get_hw_devices xc7a100t_0]
+refresh_hw_device -update_hw_probes false [lindex [get_hw_devices xc7a100t_0] 0]
+set_property PROBES.FILE {} [get_hw_devices xc7a100t_0]
+set_property FULL_PROBES.FILE {} [get_hw_devices xc7a100t_0]
+set_property PROGRAM.FILE {D:/galgame/project_2/project_2.runs/impl_1/SCCPUSOC_Top.bit} [get_hw_devices xc7a100t_0]
+program_hw_devices [get_hw_devices xc7a100t_0]
+refresh_hw_device [lindex [get_hw_devices xc7a100t_0] 0]
+set_property PROBES.FILE {} [get_hw_devices xc7a100t_0]
+set_property FULL_PROBES.FILE {} [get_hw_devices xc7a100t_0]
+set_property PROGRAM.FILE {D:/galgame/project_2/project_2.runs/impl_1/SCCPUSOC_Top.bit} [get_hw_devices xc7a100t_0]
+program_hw_devices [get_hw_devices xc7a100t_0]
+refresh_hw_device [lindex [get_hw_devices xc7a100t_0] 0]

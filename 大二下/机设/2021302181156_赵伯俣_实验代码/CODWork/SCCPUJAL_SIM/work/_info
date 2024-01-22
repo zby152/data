@@ -1,0 +1,346 @@
+m255
+K4
+z2
+13
+!s112 1.1
+!i10d 8192
+!i10e 25
+!i10f 100
+cModel Technology
+Z0 dD:/CODWork/SCCPU_SIM
+T_opt
+!s110 1683206432
+Vd;mQ4FWYF;f2_69YE@@>`2
+04 4 4 work ctrl fast 0
+=1-fc34979638bb-6453b120-49-3a4c
+Z1 o-quiet -auto_acc_if_foreign -work work
+Z2 tCvgOpt 0
+n@_opt
+Z3 OL;O;10.5;63
+R0
+T_opt1
+!s110 1683206447
+VRzXPDBk2[B9bchK7UC4XQ3
+04 4 4 work mux4 fast 0
+=1-fc34979638bb-6453b12f-352-205c
+R1
+R2
+n@_opt1
+R3
+R0
+T_opt2
+!s110 1683451854
+Vf71QKIh^F2W46bm0foa_J3
+04 9 4 work sccomp_tb fast 0
+=1-fc34979638bb-64576fce-2f1-1b44
+R1
+R2
+n@_opt2
+R3
+R0
+valu
+Z4 VDg1SIo80bB@j0V0VzS_@n1
+r1
+!s85 0
+31
+!i10b 1
+!s100 hG:NbOIQYlcN>g85bnW;o0
+IKo>Y097eJXO?RbBeaM^_S1
+Z5 dD:/CODWork/SCCPUJAL_SIM
+w1683292061
+8D:/CODWork/SCCPUJAL_SIM/alu.v
+FD:/CODWork/SCCPUJAL_SIM/alu.v
+L0 3
+Z6 OL;L;10.5;63
+Z7 !s108 1684072008.000000
+!s107 ctrl_encode_def.v|D:/CODWork/SCCPUJAL_SIM/alu.v|
+!s90 -reportprogress|300|-work|work|-vopt|-stats=none|D:/CODWork/SCCPUJAL_SIM/alu.v|
+!i113 0
+Z8 o-work work -L mtiAvm -L mtiRnm -L mtiOvm -L mtiUvm -L mtiUPF -L infact
+R2
+vctrl
+R4
+r1
+!s85 0
+31
+!i10b 1
+!s100 2i[cUN?lzKLIRDEnSKdYe1
+IRc3PKdol8>Z>XgYiP3jz80
+R5
+w1683453835
+8D:/CODWork/SCCPUJAL_SIM/ctrl.v
+FD:/CODWork/SCCPUJAL_SIM/ctrl.v
+L0 4
+R6
+R7
+!s107 D:/CODWork/SCCPUJAL_SIM/ctrl.v|
+!s90 -reportprogress|300|-work|work|-vopt|-stats=none|D:/CODWork/SCCPUJAL_SIM/ctrl.v|
+!i113 0
+R8
+R2
+vdm
+R4
+r1
+!s85 0
+31
+!i10b 1
+!s100 lVNb@;LGKEZ7iQ[VA66m_3
+IH4C_Z6Bf4aiVn?Hg:G2PM3
+R5
+w1683529828
+8D:/CODWork/SCCPUJAL_SIM/dm.v
+FD:/CODWork/SCCPUJAL_SIM/dm.v
+L0 2
+R6
+R7
+!s107 D:/CODWork/SCCPUJAL_SIM/dm.v|
+!s90 -reportprogress|300|-work|work|-vopt|-stats=none|D:/CODWork/SCCPUJAL_SIM/dm.v|
+!i113 0
+R8
+R2
+vEXT
+R4
+r1
+!s85 0
+31
+!i10b 1
+!s100 :Qj;YBKgDO7aUU<4hCmcb3
+I`9^cIPfm<P?=V4N[6V:f03
+R5
+w1683211232
+8D:/CODWork/SCCPUJAL_SIM/EXT.v
+FD:/CODWork/SCCPUJAL_SIM/EXT.v
+L0 1
+R6
+R7
+!s107 D:/CODWork/SCCPUJAL_SIM/EXT.v|
+!s90 -reportprogress|300|-work|work|-vopt|-stats=none|D:/CODWork/SCCPUJAL_SIM/EXT.v|
+!i113 0
+R8
+R2
+n@e@x@t
+vim
+R4
+r1
+!s85 0
+31
+!i10b 1
+!s100 U;JIL?DAR;UKk>XKgK4W72
+IbzF=gbT@Hb8aR_0GZ]zIb1
+R5
+w1551458228
+8D:/CODWork/SCCPUJAL_SIM/im.v
+FD:/CODWork/SCCPUJAL_SIM/im.v
+L0 3
+R6
+R7
+!s107 D:/CODWork/SCCPUJAL_SIM/im.v|
+!s90 -reportprogress|300|-work|work|-vopt|-stats=none|D:/CODWork/SCCPUJAL_SIM/im.v|
+!i113 0
+R8
+R2
+vmux16
+Z9 !s110 1684072008
+!i10b 1
+!s100 _kD]@DiV[:SJ[]_:lBKV[0
+IY[G<D=XXfE>2TXCBH`9403
+R4
+R5
+Z10 w1550765554
+Z11 8D:/CODWork/SCCPUJAL_SIM/mux.v
+Z12 FD:/CODWork/SCCPUJAL_SIM/mux.v
+L0 71
+R6
+r1
+!s85 0
+31
+R7
+Z13 !s107 D:/CODWork/SCCPUJAL_SIM/mux.v|
+Z14 !s90 -reportprogress|300|-work|work|-vopt|-stats=none|D:/CODWork/SCCPUJAL_SIM/mux.v|
+!i113 0
+R8
+R2
+vmux2
+R4
+r1
+!s85 0
+31
+!i10b 1
+!s100 QXC^TY7h[nMB8eh1LThKL1
+I>;AP>bh@4f1I<<Of<h@nE2
+R5
+R10
+R11
+R12
+L0 2
+R6
+R7
+R13
+R14
+!i113 0
+R8
+R2
+vmux4
+R4
+r1
+!s85 0
+31
+!i10b 1
+!s100 3KQ[c;ZUY31^gKT9SAAk20
+IO=PfekB;:>RP4lN6CiB4P1
+R5
+R10
+R11
+R12
+L0 15
+R6
+R7
+R13
+R14
+!i113 0
+R8
+R2
+vmux8
+R9
+!i10b 1
+!s100 FLg[0F=fBIb=LWfFP8G0M0
+I7hmik:>BG7Hf@X33;@DA>3
+R4
+R5
+R10
+R11
+R12
+L0 40
+R6
+r1
+!s85 0
+31
+R7
+R13
+R14
+!i113 0
+R8
+R2
+vNPC
+R4
+r1
+!s85 0
+31
+!i10b 1
+!s100 hZHj3^@A;QLm]aK]R[5HE0
+IaQU019@0_EG3BjP3hf:8n1
+R5
+w1683286127
+8D:/CODWork/SCCPUJAL_SIM/NPC.v
+FD:/CODWork/SCCPUJAL_SIM/NPC.v
+L0 3
+R6
+R7
+!s107 ctrl_encode_def.v|D:/CODWork/SCCPUJAL_SIM/NPC.v|
+!s90 -reportprogress|300|-work|work|-vopt|-stats=none|D:/CODWork/SCCPUJAL_SIM/NPC.v|
+!i113 0
+R8
+R2
+n@n@p@c
+vPC
+R4
+r1
+!s85 0
+31
+!i10b 1
+!s100 lM7N@gR;4fMz]3L;mLgJ<2
+IainZP[F4g9LFIlR3<e1Gh0
+R5
+w1550113688
+8D:/CODWork/SCCPUJAL_SIM/PC.v
+FD:/CODWork/SCCPUJAL_SIM/PC.v
+L0 1
+R6
+R7
+!s107 D:/CODWork/SCCPUJAL_SIM/PC.v|
+!s90 -reportprogress|300|-work|work|-vopt|-stats=none|D:/CODWork/SCCPUJAL_SIM/PC.v|
+!i113 0
+R8
+R2
+n@p@c
+vRF
+R4
+r1
+!s85 0
+31
+!i10b 1
+!s100 zoWUT2__MdloBHBeGbe6n2
+IV`:PojK?ZBRS1RlZ3=0W=1
+R5
+w1683451242
+8D:/CODWork/SCCPUJAL_SIM/RF.v
+FD:/CODWork/SCCPUJAL_SIM/RF.v
+L0 2
+R6
+R7
+!s107 D:/CODWork/SCCPUJAL_SIM/RF.v|
+!s90 -reportprogress|300|-work|work|-vopt|-stats=none|D:/CODWork/SCCPUJAL_SIM/RF.v|
+!i113 0
+R8
+R2
+n@r@f
+vsccomp
+R4
+r1
+!s85 0
+31
+!i10b 1
+!s100 @XVXhDVdWBh^gaY]SFn5z0
+IN9z]W]<OYZUg@KA<^<T6Q1
+R5
+w1683423086
+8D:/CODWork/SCCPUJAL_SIM/sccomp.v
+FD:/CODWork/SCCPUJAL_SIM/sccomp.v
+L0 1
+R6
+R7
+!s107 D:/CODWork/SCCPUJAL_SIM/sccomp.v|
+!s90 -reportprogress|300|-work|work|-vopt|-stats=none|D:/CODWork/SCCPUJAL_SIM/sccomp.v|
+!i113 0
+R8
+R2
+vsccomp_tb
+R4
+r1
+!s85 0
+31
+!i10b 1
+!s100 lK3356E<acY>aQ<SWjkFe1
+IcEQdB2;>aX3Tf7_BDVabf0
+R5
+w1684072004
+8D:\CODWork\SCCPUJAL_SIM\sccomp_tb.v
+FD:\CODWork\SCCPUJAL_SIM\sccomp_tb.v
+L0 3
+R6
+R7
+!s107 D:\CODWork\SCCPUJAL_SIM\sccomp_tb.v|
+!s90 -reportprogress|300|-work|work|-vopt|-stats=none|D:\CODWork\SCCPUJAL_SIM\sccomp_tb.v|
+!i113 0
+R8
+R2
+vsccpu
+R4
+r1
+!s85 0
+31
+!i10b 1
+!s100 YhOJEL[_NHd<9IP^5Gh?L1
+INF2?kLK:fAiEFAC[[[hQP3
+R5
+w1683534196
+8D:/CODWork/SCCPUJAL_SIM/sccpu.v
+FD:/CODWork/SCCPUJAL_SIM/sccpu.v
+L0 1
+R6
+R7
+!s107 D:/CODWork/SCCPUJAL_SIM/sccpu.v|
+!s90 -reportprogress|300|-work|work|-vopt|-stats=none|D:/CODWork/SCCPUJAL_SIM/sccpu.v|
+!i113 0
+R8
+R2
